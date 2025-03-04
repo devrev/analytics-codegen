@@ -271,3 +271,58 @@ GROUP BY article_id
    - Avoid using * in SELECT statements when possible
    - Don't rely on table aliases in sql_expression fields
    - Use clear, unique column names to avoid ambiguity
+
+### Supported Field Types in DevRev
+
+When defining dimensions and measures, DevRev supports the following field types:
+
+1. **Numeric Types**
+   - `int`: Integer values
+   - `double`: Floating-point numbers
+   - `decimal`: Precise decimal numbers
+   - `currency`: Monetary values
+
+2. **Boolean Type**
+   - `bool`: True/false values
+
+3. **Text Types**
+   - `string`: Basic string values
+   - `text`: Longer text content
+   - `tokens`: Tokenized text for search/filtering
+   - `rich_text`: Formatted text with markup
+   - `bytes`: Binary data
+
+4. **Time Type**
+   - `timestamp`: Date and time values
+
+5. **Reference Types**
+   - `id`: Unique identifiers
+   - `overridable_enum`: Enumerated values that can be overridden
+   - `uenum`: User-defined enumeration
+   - `reference_enum`: Reference to enumerated values
+
+Example usage in dimension definition:
+
+```json
+{
+    "devrev_schema": {
+        "field_type": "timestamp",  // One of the supported field types
+        "db_name": "created_date",
+        "is_filterable": true,
+        "name": "created_date",
+        "ui": {
+            "display_name": "Creation Date"
+        }
+    },
+    "meerkat_schema": {
+        "sql_expression": "created_date",
+        "type": "time"
+    }
+}
+```
+
+When choosing field types:
+- Use appropriate numeric types (`int`, `double`, `decimal`) based on precision needs
+- Choose between text types based on content and search requirements
+- Use `timestamp` for all date/time fields to ensure proper filtering
+- Select correct enumeration type (`overridable_enum`, `uenum`, `reference_enum`) based on value source
