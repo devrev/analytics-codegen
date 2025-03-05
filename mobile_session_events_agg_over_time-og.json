@@ -1,0 +1,163 @@
+{
+    "data_sources": [
+        {
+            "type": "oasis",
+            "reference_name": "mobile_events",
+            "oasis": {
+                "datasets": [
+                    "system.mobile_sessions_events_agg"
+                ],
+                "sql_query": "SELECT created_at, event_count FROM system.mobile_sessions_events_agg ORDER BY created_at"
+            },
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "db_name": "created_at",
+                        "name": "created_at",
+                        "is_filterable": true,
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "created_at",
+                        "type": "time"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "db_name": "app_version",
+                        "name": "app_version",
+                        "is_filterable": true,
+                        "ui": {
+                            "display_name": "App Version"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "app_version",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "db_name": "screen_name",
+                        "name": "screen_name",
+                        "is_filterable": true,
+                        "ui": {
+                            "display_name": "Screen Name"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "screen_name",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "db_name": "event_type_name",
+                        "name": "event_type_name",
+                        "is_filterable": true,
+                        "ui": {
+                            "display_name": "Event Type"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "event_type_name",
+                        "type": "string"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "total_events",
+                        "name": "total_events",
+                        "ui": {
+                            "display_name": "Total Events"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(event_count)",
+                        "type": "number"
+                    }
+                }
+            ]
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "created_at"
+                ],
+                "measures": [
+                    "total_events"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "created_at"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "line",
+                "line": {
+                    "x_axis": {
+                        "title": "Date"
+                    },
+                    "y_axis": {
+                        "title": "Number of Events"
+                    }
+                }
+            }
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "app_version",
+                    "event_type_name",
+                    "screen_name"
+                ],
+                "measures": [
+                    "total_events"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "total_events"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "table",
+                "table": {
+                    "columns": [
+                        {
+                            "reference_name": "app_version",
+                            "title": "App Version"
+                        },
+                        {
+                            "reference_name": "event_type_name",
+                            "title": "Event Type"
+                        },
+                        {
+                            "reference_name": "screen_name",
+                            "title": "Screen Name"
+                        },
+                        {
+                            "reference_name": "total_events",
+                            "title": "Total Events"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "title": "Mobile Events Analysis"
+}

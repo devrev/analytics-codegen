@@ -1,0 +1,110 @@
+{
+    "data_sources": [
+        {
+            "type": "oasis",
+            "reference_name": "mobile_sessions_data",
+            "oasis": {
+                "datasets": [
+                    "system.mobile_sessions_metadatas_v1"
+                ],
+                "sql_query": "SELECT network_operator, app_launch_time FROM system.mobile_sessions_metadatas_v1"
+            },
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "db_name": "network_operator",
+                        "is_filterable": true,
+                        "name": "network_operator",
+                        "ui": {
+                            "display_name": "Network Operator"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "network_operator",
+                        "type": "string"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "db_name": "avg_app_launch_time",
+                        "name": "avg_app_launch_time",
+                        "ui": {
+                            "display_name": "Average App Launch Time (ms)"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "AVG(app_launch_time)",
+                        "type": "number"
+                    }
+                }
+            ]
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "network_operator"
+                ],
+                "measures": [
+                    "avg_app_launch_time"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "avg_app_launch_time"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "bar",
+                "bar": {
+                    "x_axis": {
+                        "reference_name": "network_operator",
+                        "label": "Network Operator"
+                    },
+                    "y_axis": {
+                        "reference_name": "avg_app_launch_time",
+                        "label": "Average App Launch Time (ms)"
+                    }
+                }
+            }
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "network_operator"
+                ],
+                "measures": [
+                    "avg_app_launch_time"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "avg_app_launch_time"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "table",
+                "table": {
+                    "columns": [
+                        {
+                            "reference_name": "network_operator",
+                            "header": "Network Operator"
+                        },
+                        {
+                            "reference_name": "avg_app_launch_time",
+                            "header": "Average App Launch Time (ms)"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "title": "App Launch Time by Network Operator"
+}
