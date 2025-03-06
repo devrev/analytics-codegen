@@ -1,0 +1,141 @@
+{
+    "data_sources": [
+        {
+            "type": "oasis",
+            "reference_name": "article_views_summary",
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT * FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "db_name": "record_date",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "record_date",
+                        "type": "time"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "db_name": "title",
+                        "is_filterable": true,
+                        "name": "article_title",
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "title",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "db_name": "surface",
+                        "is_filterable": true,
+                        "name": "surface",
+                        "ui": {
+                            "display_name": "Surface"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "surface",
+                        "type": "string"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "total_views",
+                        "name": "total_views",
+                        "ui": {
+                            "display_name": "Total Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(total_views)",
+                        "type": "number"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "unique_views",
+                        "name": "unique_views",
+                        "ui": {
+                            "display_name": "Unique Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(unique_views)",
+                        "type": "number"
+                    }
+                }
+            ]
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "record_date",
+                    "article_title",
+                    "surface"
+                ],
+                "measures": [
+                    "total_views",
+                    "unique_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "total_views"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "table",
+                "table": {
+                    "columns": [
+                        {
+                            "reference_name": "record_date",
+                            "width": 150
+                        },
+                        {
+                            "reference_name": "article_title",
+                            "width": 300
+                        },
+                        {
+                            "reference_name": "surface",
+                            "width": 120
+                        },
+                        {
+                            "reference_name": "total_views",
+                            "width": 120
+                        },
+                        {
+                            "reference_name": "unique_views",
+                            "width": 120
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "title": "Article Analytics - Total Views"
+}
