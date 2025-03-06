@@ -1,0 +1,257 @@
+{
+    "data_sources": [
+        {
+            "type": "oasis",
+            "reference_name": "article_views_summary",
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT * FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "db_name": "article_id",
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "ui": {
+                            "display_name": "Article ID"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "article_id",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "db_name": "record_date",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "record_date",
+                        "type": "time"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "db_name": "account_id",
+                        "is_filterable": true,
+                        "name": "account_id",
+                        "ui": {
+                            "display_name": "Account ID"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "account_id",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "db_name": "surface",
+                        "is_filterable": true,
+                        "name": "surface",
+                        "ui": {
+                            "display_name": "Surface"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "surface",
+                        "type": "string"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "bool",
+                        "db_name": "is_verified",
+                        "is_filterable": true,
+                        "name": "is_verified",
+                        "ui": {
+                            "display_name": "Is Verified"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "is_verified",
+                        "type": "boolean"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "db_name": "title",
+                        "is_filterable": true,
+                        "name": "title",
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "title",
+                        "type": "string"
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "total_views",
+                        "name": "total_views",
+                        "ui": {
+                            "display_name": "Total Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(total_views)",
+                        "type": "number"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "unique_views",
+                        "name": "unique_views",
+                        "ui": {
+                            "display_name": "Unique Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(unique_views)",
+                        "type": "number"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "total_duration_ms",
+                        "name": "total_duration_ms",
+                        "ui": {
+                            "display_name": "Total Duration (ms)"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(total_duration_ms)",
+                        "type": "number"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "article_upvotes",
+                        "name": "article_upvotes",
+                        "ui": {
+                            "display_name": "Upvotes"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(article_upvotes)",
+                        "type": "number"
+                    }
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "article_downvotes",
+                        "name": "article_downvotes",
+                        "ui": {
+                            "display_name": "Downvotes"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(article_downvotes)",
+                        "type": "number"
+                    }
+                }
+            ]
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "record_date",
+                    "title"
+                ],
+                "measures": [
+                    "total_views",
+                    "unique_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "total_views"
+                    }
+                ]
+            },
+            "visualization": {
+                "type": "line",
+                "line": {
+                    "x_axis": "record_date",
+                    "y_axis": [
+                        "total_views",
+                        "unique_views"
+                    ]
+                }
+            }
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "title"
+                ],
+                "measures": [
+                    "total_views",
+                    "unique_views",
+                    "article_upvotes",
+                    "article_downvotes"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "total_views"
+                    }
+                ],
+                "limit": 10
+            },
+            "visualization": {
+                "type": "table",
+                "table": {
+                    "columns": [
+                        {
+                            "reference_name": "title",
+                            "display_name": "Article Title"
+                        },
+                        {
+                            "reference_name": "total_views",
+                            "display_name": "Total Views"
+                        },
+                        {
+                            "reference_name": "unique_views",
+                            "display_name": "Unique Views"
+                        },
+                        {
+                            "reference_name": "article_upvotes",
+                            "display_name": "Upvotes"
+                        },
+                        {
+                            "reference_name": "article_downvotes",
+                            "display_name": "Downvotes"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "title": "Article Analytics: Total Views"
+}
