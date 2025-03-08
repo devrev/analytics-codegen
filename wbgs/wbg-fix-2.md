@@ -777,8 +777,8 @@ Every dimension and measure MUST be referenced with its data source name:
 
 ⚠️ IF YOU SEE THESE ERRORS:
 
-1. Error: Parser Error: syntax error at or near ","
-   LINE 1: SELECT, FROM ...
+Error: Parser Error: syntax error at or near ","
+LINE 1: SELECT, FROM ...
 
 IT MEANS:
 
@@ -786,18 +786,22 @@ IT MEANS:
 - You didn't fully qualify your columns
 - You need to list each column individually
 
-2. Error: Parser Error: syntax error at or near ","
-   LINE 1: SELECT, FROM ...
+Error: Parser Error: syntax error at or near ","
+LINE 1: SELECT, FROM ...
 
 #### Reference Name Errors
 
-1. Error: Cannot find reference 'field_name'
+Error: Cannot find reference 'field_name'
 
 Solution:
 
 - Ensure all references include data source name
 - Verify the reference_name exists in dimensions/measures
 - Check for typos in reference names
+
+#### Other Errors
+
+1. Error: Failed to create widget - unexpected discriminator: string
 
 ### Best Practices Checklist
 

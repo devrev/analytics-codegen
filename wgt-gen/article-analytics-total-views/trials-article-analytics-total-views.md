@@ -1,9 +1,11 @@
 ### Input
 
-Base query:
+#### Prompt
+
+This is the base query:
 SELECT \* FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true
 
-Schema:
+Here is the schema:
 article_views_and_votes_summary
 
 Schema
@@ -106,9 +108,21 @@ TIMESTAMP
 language
 VARCHAR
 
-According to the widget-building guide, base query and table schemas, generate a JSON file for the widget.
+Understand the file attached fully for how to build a widget. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
+
+#### Follow-Up
+
+<error message from widget-preview>
+Could you fix this error by correcting the JSON file?
 
 ### Output
+
+#### Fix 2 - Visualization + Errors
+
+Failed to create widget - unexpected discriminator: string
+
+- Upon follow-up question to fix JSON
+  - Provided correct result! (See file)
 
 #### Fix 1 - Field Types
 
