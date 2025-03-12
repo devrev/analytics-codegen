@@ -118,17 +118,7 @@ Could you fix this error by correcting the JSON file?
 
 ### Output
 
-=======
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-According to the widget-building guide, base query and table schemas, generate a JSON file for the widget.
-
-### Output
-
-# =======
-
-> > > > > > > Stashed changes
-> > > > > > > Understand the files attached fully for how to build a widget, including data sources. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
+Understand the files attached fully for how to build a widget, including data sources. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
 
 #### Follow-Up
 
@@ -146,19 +136,12 @@ Unterminated string in JSON at position 2844 (line 111 column 17)
   Error: Binder Error: Referenced column "article_data**title" not found in FROM clause! Candidate bindings: "article_data.title" LINE 1: ...article_data) AS article_data GROUP BY article_data**title ORDER BY article_da... ^
 - Need to primarily fix: Failed to create widget - unexpected discriminator: string
 
-> > > > > > > Stashed changes
-
 #### Fix 2 - Visualization + Errors
 
 Failed to create widget - unexpected discriminator: string
 
 - Upon follow-up question to fix JSON
   - Provided correct result! (See file)
-
-# <<<<<<< Updated upstream
-
-> > > > > > > Stashed changes
-> > > > > > > Stashed changes
 
 #### Fix 1 - Field Types
 
