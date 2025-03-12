@@ -1,25 +1,25 @@
 # Widget Building Guide
 
-This guide explains how to create widgets using the JSON editor. The widget configuration comprises of data sources, visualizations, and how data should be processed and displayed. This ultiamtely creates a JSON file to generate a widget in the UI.
+This guide explains how to create widgets with the JSON editor. The configuration of the final widget comprises of data sources, visualizations, and how data should be processed and displayed. This ultiamtely creates a JSON file to generate a widget in the UI.
 
-The process is as follows:
+The process of widget-generation is as follows:
 First, the user will provide you the base SQL query and table schemas.
-The table schemas correspond to the tables within the SQL query that either joins multiple tables, or filters them based on aggregate functions or some kidn of grouping.
+The table schemas correspond to the tables referenced within the SQL query. The query either joins multiple tables, or filters them based on aggregate functions or some kind of grouping.
 Use this file to create the final JSON file for the widget, but first...
-Take a look at the other files to generate sub-parts of the final JSON, including:
-Data source, including dimensions, measures, and datasets specified in the schemas provided, and the base query.
-Visualization and layout, with information about the visualization type and settings for each sub-widget.
+Take a look at the other files to generate sub-sectinos of the final JSON, including:
+Data source, which includes dimensions, measures, and datasets specified in the schemas provided, and the base query.
+Visualization and layout, with information about the visualization type and settings/configuration for each sub-widget.
 
 ## Widget Configuration Structure
 
 A widget is configured of several key sections:
 
-- Data Sources
-- Layout
-- Sub Widgets
-- Visualization Settings
+Data Sources
+Layout
+Sub Widgets
+Visualization Settings
 
-A widget configuration MUST follow this top-level structure:
+A widget configuration should follow this structure at the top-level:
 
 {
 "data_sources": [ // MUST be an array
@@ -33,206 +33,355 @@ A widget configuration MUST follow this top-level structure:
 "title": "Widget Title"
 }
 
-### Widget Structure Template
+### Widget Structure, Dummy Template
 
-Here is a sample template of what the final widget JSON file should look like.
+This is a dummy template of what the final widget JSON file should look like.
+It is made up of all of the sections from the other files.
+Plesae follow this exact configuration to construct the final JSON by combining everything together.
 
-```json
 {
-  "data_sources": [
-    {
-      "type": "oasis",
-      "reference_name": "your_source_name",
-      "dimensions": [
-        {
-          "reference_name": "your_dimension"
-          // ... dimension configuration
-        }
-      ],
-      "measures": [
-        {
-          "reference_name": "your_measure"
-          // ... measure configuration
-        }
-      ]
-    }
-  ],
-  "sub_widgets": [
-    {
-      "query": {
-        "dimensions": ["your_source_name.your_dimension"],
-        "measures": ["your_source_name.your_measure"],
-        "order_by": [
-          {
-            "direction": "ascending",
-            "reference_name": "your_source_name.your_dimension"
-          }
-        ]
-      },
-      "visualization": {
-        "type": "line",
-        "line": {
-          "x": [
-            {
-              "label": "Your X-Axis Label",
-              "reference_name": "your_source_name.your_dimension"
-            }
-          ],
-          "y": [
-            {
-              "label": "Your Y-Axis Label",
-              "reference_name": "your_source_name.your_measure"
-            }
-          ]
-        }
-      }
-    }
-  ]
-}
-```
-
-### 1. Data Sources
-
-Each object in the `data_sources` array requires:
-
-- `type`: The source type (usually "oasis")
-- `reference_name`: Unique identifier used to reference this source
-- `oasis`: Configuration for oasis data
-- `dimensions`: Array of dimension definitions
-- `measures`: Array of measure definitions
-
-The `data_sources` section is the foundation of your widget. It defines:
-
-#### a. Datasets and Base Query
-
-In the `oasis` section:
-
-"oasis": {
-"datasets": [
-// List of tables/datasets to use
-"system.dataset1",
-"system.dataset2"
+"data_sources": [
+{
+"dimensions": [
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"work"
 ],
-"sql_query": "Your base SQL query here"
+"is_filterable": true,
+"name": "id",
+"ui": {
+"display_name": "Id"
 }
-
-- `datasets`: List all tables/views that your query will use
-- `sql_query`: The base SQL query that joins and processes your data
-
-#### b. Dimensions
-
-Dimensions act as filters on your base query. Each dimension defines:
-
-- `field_type`: The type of field (id, timestamp, enum, bool, tokens, array)
-- `db_name`: Database column name
-- `name`: Reference name for the field
-- `is_filterable`: Whether this field can be used as a filter
-- `ui`: Display settings for the field
-
-Example dimension:
-
+},
+"meerkat_schema": {
+"sql_expression": "id",
+"type": "string"
+},
+"reference_name": "id"
+},
+{
+"devrev_schema": {
+"allowed_values": [
+"High",
+"Medium",
+"Low",
+"Blocker"
+],
+"field_type": "enum",
+"is_filterable": true,
+"name": "severity_name",
+"ui": {
+"display_name": "Severity"
+}
+},
+"meerkat_schema": {
+"sql_expression": "severity_name",
+"type": "string"
+},
+"reference_name": "severity_name"
+},
+{
+"devrev_schema": {
+"composite_type": "stage",
+"field_type": "composite",
+"is_filterable": true,
+"name": "stage_id",
+"ui": {
+"display_name": "Stage"
+}
+},
+"meerkat_schema": {
+"sql_expression": "stage_id",
+"type": "string"
+},
+"reference_name": "stage_id"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"account"
+],
+"is_filterable": true,
+"name": "account_id",
+"ui": {
+"display_name": "Customer"
+}
+},
+"meerkat_schema": {
+"sql_expression": "account_id",
+"type": "string"
+},
+"reference_name": "account_id"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"rev_org"
+],
+"is_filterable": false,
+"name": "rev_oid",
+"ui": {
+"display_name": "Customer"
+}
+},
+"meerkat_schema": {
+"sql_expression": "rev_oid",
+"type": "string"
+},
+"reference_name": "rev_oid"
+},
 {
 "devrev_schema": {
 "field_type": "timestamp",
-"db_name": "record_date",
+"is_filterable": true,
+"name": "created_date",
+"ui": {
+"display_name": "Created Date"
+}
+},
+"meerkat_schema": {
+"sql_expression": "created_date",
+"type": "time"
+},
+"reference_name": "created_date"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"account"
+],
+"is_filterable": true,
+"name": "account_id",
+"ui": {
+"display_name": "Account"
+}
+},
+"meerkat_schema": {
+"sql_expression": "account_id",
+"type": "string"
+},
+"reference_name": "account_id"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"part"
+],
+"is_filterable": true,
+"name": "primary_part_id",
+"ui": {
+"display_name": "Part"
+}
+},
+"meerkat_schema": {
+"sql_expression": "primary_part_id",
+"type": "string"
+},
+"reference_name": "primary_part_id"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"tag"
+],
+"is_filterable": true,
+"name": "tag_ids",
+"ui": {
+"display_name": "Tag"
+}
+},
+"meerkat_schema": {
+"sql_expression": "tag_ids",
+"type": "string_array"
+},
+"reference_name": "tag_ids"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"group"
+],
+"is_filterable": true,
+"name": "group_id",
+"ui": {
+"display_name": "Group"
+}
+},
+"meerkat_schema": {
+"sql_expression": "group_id",
+"type": "string"
+},
+"reference_name": "group_id"
+},
+{
+"devrev_schema": {
+"field_type": "timestamp",
 "is_filterable": true,
 "name": "record_date",
 "ui": {
-"display_name": "Date"
+"display_name": "Range"
 }
 },
 "meerkat_schema": {
 "sql_expression": "record_date",
 "type": "time"
-}
-}
-
-#### c. Measures
-
-Measures define aggregations on your base query. Each measure specifies:
-
-- `field_type`: Data type (int, double, etc.)
-- `db_name`: Column name for the measure
-- `name`: Reference name
-- `ui`: Display settings
-- `sql_expression`: The aggregation function to apply
-
-Example measure:
-
+},
+"reference_name": "record_date"
+},
 {
 "devrev_schema": {
-"field_type": "int",
-"db_name": "total_views",
-"name": "total_views",
+"field_type": "id",
+"id_type": [
+"part"
+],
+"is_filterable": true,
+"name": "primary_part_id",
 "ui": {
-"display_name": "Total Views"
+"display_name": "Part"
 }
 },
 "meerkat_schema": {
-"sql_expression": "COUNT(e_article_id)",
-"type": "number"
-}
-}
-
-#### d. Supported Field Types in DevRev
-
-When defining dimensions and measures, DevRev supports the following field types:
-
-1. **Numeric Types**
-
-   - `int`: Integer values
-   - `double`: Floating-point numbers
-   - `decimal`: Precise decimal numbers
-   - `currency`: Monetary values
-
-2. **Boolean Type**
-
-   - `bool`: True/false values
-
-3. **Text Types**
-
-   - `string`: Basic string values
-   - `text`: Longer text content
-   - `tokens`: Tokenized text for search/filtering
-   - `rich_text`: Formatted text with markup
-   - `bytes`: Binary data
-
-4. **Time Type**
-
-   - `timestamp`: Date and time values
-
-5. **Reference Types**
-   - `id`: Unique identifiers
-   - `overridable_enum`: Enumerated values that can be overridden
-   - `uenum`: User-defined enumeration
-   - `reference_enum`: Reference to enumerated values
-
-Example usage in dimension definition:
-
-```json
+"sql_expression": "primary_part_id",
+"type": "string"
+},
+"reference_name": "primary_part_id"
+},
 {
-  "devrev_schema": {
-    "field_type": "timestamp", // One of the supported field types
-    "db_name": "created_date",
-    "is_filterable": true,
-    "name": "created_date",
-    "ui": {
-      "display_name": "Creation Date"
-    }
-  },
-  "meerkat_schema": {
-    "sql_expression": "created_date",
-    "type": "time"
-  }
+"devrev_schema": {
+"allowed_values": [
+"active",
+"breached",
+"completed",
+"warning",
+"paused"
+],
+"base_type": "enum",
+"field_type": "array",
+"is_filterable": true,
+"name": "sla_stage",
+"ui": {
+"display_name": "SLA Stage"
 }
-```
+},
+"meerkat_schema": {
+"sql_expression": "sla_stage",
+"type": "string"
+},
+"reference_name": "sla_stage"
+},
+{
+"devrev_schema": {
+"field_type": "id",
+"id_type": [
+"dev_user",
+"rev_user"
+],
+"is_filterable": true,
+"name": "Owner",
+"ui": {
+"display_name": "Owner"
+}
+},
+"meerkat_schema": {
+"sql_expression": "owned_by_ids",
+"type": "string_array"
+},
+"reference_name": "owned_by_ids"
+}
+],
+"measures": [
+{
+"devrev_schema": {
+"field_type": "int",
+"is_filterable": true,
+"name": "unique_ids_count",
+"ui": {
+"display_name": "Tickets"
+}
+},
+"meerkat_schema": {
+"sql_expression": "COUNT(DISTINCT id)",
+"type": "number"
+},
+"reference_name": "unique_ids_count"
+}
+],
+"oasis": {
+"datasets": [
+"system.support_insights_ticket_metrics_summary"
+],
+"sql_query": "select record_hour AS record_date,\* from system.support_insights_ticket_metrics_summary WHERE account_id IS NOT NULL AND account_id != '' AND state != 'closed'"
+},
+"reference_name": "support_insights_ticket_metrics_summary",
+"type": "oasis"
+}
+],
+"description": "A list of your customers and the number of tickets they created, ranked from high to low.",
+"layout": [
+{
+"position": {
+"height": 1,
+"width": 1,
+"x": 0,
+"y": 0
+},
+"reference_id": "subwidget1"
+}
+],
+"sub_widgets": [
+{
+"query": {
+"dimensions": [
+"support_insights_ticket_metrics_summary.account_id"
+],
+"measures": [
+"support_insights_ticket_metrics_summary.unique_ids_count"
+],
+"order_by": [
+{
+"direction": "descending",
+"reference_name": "support_insights_ticket_metrics_summary.unique_ids_count"
+}
+]
+},
+"reference_id": "subwidget1",
+"visualization": {
+"table": {
+"columns": [
+{
+"drill_throughs": [
+{
+"dashboard": "don:data:dvrv-global:dashboard/dn7qoVCoiD",
+"label": "drill"
+}
+],
+"label": "Account",
+"reference_name": "support_insights_ticket_metrics_summary.account_id"
+},
+{
+"label": "Count",
+"reference_name": "support_insights_ticket_metrics_summary.unique_ids_count"
+}
+]
+},
+"type": "table"
+}
+}
+],
+"title": "Customer Impact"
+}
 
-When choosing field types:
+### 1. Data Sources
 
-- Use appropriate numeric types (`int`, `double`, `decimal`) based on precision needs
-- Choose between text types based on content and search requirements
-- Use `timestamp` for all date/time fields to ensure proper filtering
-- Select correct enumeration type (`overridable_enum`, `uenum`, `reference_enum`) based on value source
+Please see data-source.md file to generate the data soruce first.
 
 ### 2. Sub Widgets
 
