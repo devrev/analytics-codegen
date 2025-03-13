@@ -331,6 +331,8 @@ Example - Putting it all together:
 ],
 "sql_query": "select record_hour AS record_date,\* from system.support_insights_ticket_metrics_summary WHERE account_id IS NOT NULL AND account_id != '' AND state != 'closed'"
 
+For more information about the base query, see base-query.md file.
+
 ## Dimensions
 
 Dimensions represent filters of your base query. They are the categorical, non-numerical columns within the table.
@@ -455,3 +457,13 @@ Example of choosing field types for a dimension:
 ```
 
 Note: Similar process for measures.
+
+## Best Practices
+
+Use meaningful names for dimensions and measures
+In measures and dimensions, use direct column names
+Include appropriate filters in dimensions
+Consider performance implications of complex joins
+Use appropriate field types for better UI interaction
+Avoid table aliases in sql_expression fields
+Use proper column qualification when names are ambiguous

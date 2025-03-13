@@ -17,7 +17,7 @@ LINE 1: SELECT, FROM ...
 
 Error: Cannot find reference 'field_name'
 
-Fix:=
+Fix:
 Ensure all references include data source name
 Verify the reference_name exists in dimensions/measures
 Check for typos in reference names
@@ -29,3 +29,11 @@ Error: Failed to create widget - Missing required field: reference_name
 ## Visualization Errors
 
 Error: Failed to create widget - unexpected discriminator: string
+
+## Reference Table Errors
+
+Error: Referenced table "X" not found
+
+Fix:
+This usually means you're using a table alias in sql_expression
+Remove table aliases from sql_expression and make sure columns are explicitly selected in base query
