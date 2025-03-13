@@ -1,0 +1,336 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "article"
+                        ],
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "ui": {
+                            "display_name": "Article"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "article_id",
+                        "type": "string"
+                    },
+                    "reference_name": "article_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "record_date",
+                        "type": "time"
+                    },
+                    "reference_name": "record_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "account"
+                        ],
+                        "is_filterable": true,
+                        "name": "account_id",
+                        "ui": {
+                            "display_name": "Account"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "account_id",
+                        "type": "string"
+                    },
+                    "reference_name": "account_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "is_filterable": true,
+                        "name": "surface",
+                        "ui": {
+                            "display_name": "Surface"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "surface",
+                        "type": "string"
+                    },
+                    "reference_name": "surface"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "bool",
+                        "is_filterable": true,
+                        "name": "is_verified",
+                        "ui": {
+                            "display_name": "Is Verified"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "is_verified",
+                        "type": "boolean"
+                    },
+                    "reference_name": "is_verified"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "is_filterable": true,
+                        "name": "title",
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "title",
+                        "type": "string"
+                    },
+                    "reference_name": "title"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "published_date",
+                        "ui": {
+                            "display_name": "Published Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "published_date",
+                        "type": "time"
+                    },
+                    "reference_name": "published_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "string",
+                        "is_filterable": true,
+                        "name": "language",
+                        "ui": {
+                            "display_name": "Language"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "language",
+                        "type": "string"
+                    },
+                    "reference_name": "language"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": true,
+                        "name": "total_views",
+                        "ui": {
+                            "display_name": "Total Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(total_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "total_views"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": true,
+                        "name": "unique_views",
+                        "ui": {
+                            "display_name": "Unique Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(unique_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "unique_views"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": true,
+                        "name": "article_upvotes",
+                        "ui": {
+                            "display_name": "Upvotes"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(article_upvotes)",
+                        "type": "number"
+                    },
+                    "reference_name": "article_upvotes"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": true,
+                        "name": "article_downvotes",
+                        "ui": {
+                            "display_name": "Downvotes"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(article_downvotes)",
+                        "type": "number"
+                    },
+                    "reference_name": "article_downvotes"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": true,
+                        "name": "avg_duration_seconds",
+                        "ui": {
+                            "display_name": "Average Duration (seconds)"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "AVG(total_duration_ms) / 1000",
+                        "type": "number"
+                    },
+                    "reference_name": "avg_duration_seconds"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT s.article_id, s.record_date, s.account_id, s.surface, s.is_verified, s.total_views, s.total_duration_ms, s.unique_views, s.article_upvotes, s.article_downvotes, a.title, a.published_date, a.language FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "reference_name": "article_views_summary",
+            "type": "oasis"
+        }
+    ],
+    "description": "Article performance metrics showing views, engagement, and feedback over time.",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "article_views_chart"
+        },
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 1
+            },
+            "reference_id": "article_performance_table"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "article_views_summary.record_date"
+                ],
+                "measures": [
+                    "article_views_summary.total_views",
+                    "article_views_summary.unique_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "article_views_summary.record_date"
+                    }
+                ]
+            },
+            "reference_id": "article_views_chart",
+            "visualization": {
+                "line": {
+                    "x": [
+                        {
+                            "label": "Date",
+                            "reference_name": "article_views_summary.record_date"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Total Views",
+                            "reference_name": "article_views_summary.total_views"
+                        },
+                        {
+                            "label": "Unique Views",
+                            "reference_name": "article_views_summary.unique_views"
+                        }
+                    ]
+                },
+                "type": "line"
+            }
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "article_views_summary.article_id",
+                    "article_views_summary.title"
+                ],
+                "measures": [
+                    "article_views_summary.total_views",
+                    "article_views_summary.unique_views",
+                    "article_views_summary.article_upvotes",
+                    "article_views_summary.article_downvotes",
+                    "article_views_summary.avg_duration_seconds"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "article_views_summary.total_views"
+                    }
+                ]
+            },
+            "reference_id": "article_performance_table",
+            "visualization": {
+                "table": {
+                    "columns": [
+                        {
+                            "label": "Article",
+                            "reference_name": "article_views_summary.title"
+                        },
+                        {
+                            "label": "Total Views",
+                            "reference_name": "article_views_summary.total_views"
+                        },
+                        {
+                            "label": "Unique Views",
+                            "reference_name": "article_views_summary.unique_views"
+                        },
+                        {
+                            "label": "Upvotes",
+                            "reference_name": "article_views_summary.article_upvotes"
+                        },
+                        {
+                            "label": "Downvotes",
+                            "reference_name": "article_views_summary.article_downvotes"
+                        },
+                        {
+                            "label": "Avg. Duration (sec)",
+                            "reference_name": "article_views_summary.avg_duration_seconds"
+                        }
+                    ]
+                },
+                "type": "table"
+            }
+        }
+    ],
+    "title": "Article Performance Dashboard"
+}

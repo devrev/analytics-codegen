@@ -37,4 +37,4 @@ Schema:
 
 <Should be separated by a new line, if multiple entries>
 
-According to the widget-building guide, base query and table schemas, generate a JSON file for the widget.
+Understand the files attached fully for how to build a widget, including data sources. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.

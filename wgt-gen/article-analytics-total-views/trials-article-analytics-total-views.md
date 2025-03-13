@@ -108,6 +108,7 @@ TIMESTAMP
 language
 VARCHAR
 
+<<<<<<< Updated upstream
 Understand the file attached fully for how to build a widget. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
 
 #### Follow-Up
@@ -116,6 +117,24 @@ Understand the file attached fully for how to build a widget. Provide a JSON fil
 Could you fix this error by correcting the JSON file?
 
 ### Output
+
+Understand the files attached fully for how to build a widget, including data sources. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
+
+#### Follow-Up
+
+<error message from widget-preview>
+Could you fix this error by correcting the JSON file according to errors-to-fix MD file?
+
+### Output
+
+#### Fix 3 - Specific Instructions + Splitting Files
+
+Failed to create widget - unexpected discriminator: strin
+Unterminated string in JSON at position 2844 (line 111 column 17)
+
+- Looped to same error
+  Error: Binder Error: Referenced column "article_data**title" not found in FROM clause! Candidate bindings: "article_data.title" LINE 1: ...article_data) AS article_data GROUP BY article_data**title ORDER BY article_da... ^
+- Need to primarily fix: Failed to create widget - unexpected discriminator: string
 
 #### Fix 2 - Visualization + Errors
 
