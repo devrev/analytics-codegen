@@ -108,24 +108,12 @@ TIMESTAMP
 language
 VARCHAR
 
-<<<<<<< Updated upstream
 Understand the file attached fully for how to build a widget. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
 
 #### Follow-Up
 
 <error message from widget-preview>
 Could you fix this error by correcting the JSON file?
-
-### Output
-
-Understand the files attached fully for how to build a widget, including data sources. Provide a JSON file to generate a visualization, according to the base query, table schemas and attached guide above.
-
-#### Follow-Up
-
-<error message from widget-preview>
-Could you fix this error by correcting the JSON file according to errors-to-fix MD file?
-
-### Output
 
 #### Fix 3 - Specific Instructions + Splitting Files
 
