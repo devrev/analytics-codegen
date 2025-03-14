@@ -26,13 +26,16 @@ The widget system transforms your base query through several layers:
 
 Base Layer, the original SQL base query:
 
+```sql
 SELECT article_views_and_votes_summary., dim_article.title
 FROM system.article_views_and_votes_summary
 LEFT OUTER JOIN system.dim_article
 ON article_views_and_votes_summary.article_id = dim_article.id
+```
 
 Measure Layer, system-generated:
 
+```sql
 SELECT
 SUM(total_views) as article_views_summarytotal_views,
 SUM(unique_views) as article_views_summaryunique_views
@@ -43,14 +46,17 @@ FROM system.article_views_and_votes_summary
 LEFT OUTER JOIN system.dim_article
 ON article_views_and_votes_summary.article_id = dim_article.id
 ) AS article_views_summary
+```
 
 Filter Layer, system-generated):
 
+```sql
 SELECT FROM (
 -- Measure layer query is inserted here
 ) AS filtered_query
 WHERE record_date >= '2024-01-01'
 GROUP BY article_id
+```
 
 Key Points to Remember:
 
@@ -78,27 +84,35 @@ Correct vs Incorrect Examples:
 
 Incorrect Approach:
 
+```json
 {
-"sql_query": "SELECT FROM table1 t1 JOIN table2 t2 ON t1.id = t2.id",
-"dimensions": [{
-"meerkat_schema": {
-"sql_expression": "t2.column_name", // WRONG: using table alias
-"type": "string"
+  "sql_query": "SELECT FROM table1 t1 JOIN table2 t2 ON t1.id = t2.id",
+  "dimensions": [
+    {
+      "meerkat_schema": {
+        "sql_expression": "t2.column_name", // WRONG: using table alias
+        "type": "string"
+      }
+    }
+  ]
 }
-}]
-}
+```
 
 Correct Approach:
 
+```json
 {
-"sql_query": "SELECT t1., t2.column_name FROM table1 t1 JOIN table2 t2 ON t1.id = t2.id",
-"dimensions": [{
-"meerkat_schema": {
-"sql_expression": "column_name", // RIGHT: using just the column name
-"type": "string"
+  "sql_query": "SELECT t1., t2.column_name FROM table1 t1 JOIN table2 t2 ON t1.id = t2.id",
+  "dimensions": [
+    {
+      "meerkat_schema": {
+        "sql_expression": "column_name", // RIGHT: using just the column name
+        "type": "string"
+      }
+    }
+  ]
 }
-}]
-}
+```
 
 Best Practices:
 
@@ -114,7 +128,7 @@ Your base query in `sql_query` MUST follow these rules:
 MANDATORY: List EVERY column individually with its table name
 
 ```sql
--- ✅ CORRECT AND REQUIRED FORMAT:
+-- CORRECT AND REQUIRED FORMAT:
 SELECT
     table1.column1,
     table1.column2,
@@ -122,7 +136,7 @@ SELECT
 FROM schema.table1
 JOIN schema.table2 ON table1.id = table2.id
 
--- 🚫 ANY OF THESE WILL BREAK YOUR WIDGET:
+-- INCORRECT: DO NOT PERFORM ANY OF THESE:
 SELECT *                                    -- BREAKS
 SELECT table.*                             -- BREAKS
 SELECT column1, column2                    -- BREAKS
