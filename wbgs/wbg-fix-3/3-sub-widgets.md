@@ -5,6 +5,7 @@ They are composed of the query and visualization.
 
 Example sub-widget:
 
+```json
 "sub_widgets": [
 {
 "query": {
@@ -44,12 +45,14 @@ Example sub-widget:
 }
 }
 ]
+```
 
 ## Query
 
 The query contains corresponding dimensions and measures, as well as the ordering/grouping within the base query.
 See the example below.
 
+```json
 "query": {
 "dimensions": [
 "article_data.title"
@@ -65,6 +68,7 @@ See the example below.
 }
 ]
 }
+```
 
 Dimension and Measure References in Queries:
 
@@ -100,6 +104,7 @@ Putting it together in the query:
 The second part of the sub-widget is the visualization.
 The example below comes right after the `reference_id` field.
 
+```json
       "visualization": {
         "table": {
           "columns": [
@@ -119,6 +124,7 @@ The example below comes right after the `reference_id` field.
         },
         "type": "table"
       }
+```
 
 ### Visualization Types
 
@@ -136,6 +142,7 @@ See below for examples of these structures within the visualization section.
 
 Table:
 
+```json
 "visualization": {
 "table": {
 "columns": [
@@ -152,9 +159,10 @@ Table:
 },
 "type": "table"
 }
+```
 
-- To enable GroupBy in Table add is_groupable in dimension
-  { "ui": { "is_groupable": true } }
+NOTE: To enable GroupBy in Table add is_groupable in dimension
+{ "ui": { "is_groupable": true } }
 
 Line:
 
@@ -186,6 +194,7 @@ Line:
 
 Bar/Horizontal Bar:
 
+```json
     "visualization": {
     "bar": {
     "is_stacked": false,
@@ -204,11 +213,13 @@ Bar/Horizontal Bar:
     },
     "type": "bar"
     }
+```
 
 NOTE: is_stacked is optional and it is used when you have done group by twice
 
 Column/Vertical bar chart)
 
+```json
 "visualization": {
 "column": {
 "is_stacked": true,
@@ -248,12 +259,14 @@ Column/Vertical bar chart)
 },
 "type": "column"
 }
+```
 
 NOTE 1: is_stacked MUST be optional and it is used when you have done group by twice
 NOTE 2: This example is with stacked true and color object indicates which key to what color
 
 Packed Bubble:
 
+```json
 "visualization": {
 "packed_bubble": {
 "x": [
@@ -292,9 +305,11 @@ Packed Bubble:
 },
 "type": "packed_bubble"
 }
+```
 
 Donut:
 
+```json
 "visualization": {
 "donut": {
 "x": [
@@ -327,9 +342,11 @@ Donut:
 },
 "type": "donut"
 }
+```
 
 Pie chart:
 
+```json
 "visualization": {
 "pie": {
 "x": [
@@ -362,40 +379,44 @@ Pie chart:
 },
 "type": "pie"
 }
+```
 
 Heatmap:
 
+```json
 {
-"heatmap": {
-"x": {
-"label": "Created Date",
-"reference_name": "dim_conversation.created_date"
-},
-"y": {
-"label": "Source",
-"reference_name": "dim_conversation.owned_by_id"
-},
-"z": {
-"color": {
-"static": "chart-category-3-base",
-"type": "static"
-},
-"drill_throughs": [
-{
-"dashboard": "don:data:dvrv-us-1:devo/0:dashboard/1U5KEFvaCV",
-"dashboard_v1": "don:DEV-0:dashboard:1U5KEFvaCV",
-"label": "drill"
+  "heatmap": {
+    "x": {
+      "label": "Created Date",
+      "reference_name": "dim_conversation.created_date"
+    },
+    "y": {
+      "label": "Source",
+      "reference_name": "dim_conversation.owned_by_id"
+    },
+    "z": {
+      "color": {
+        "static": "chart-category-3-base",
+        "type": "static"
+      },
+      "drill_throughs": [
+        {
+          "dashboard": "don:data:dvrv-us-1:devo/0:dashboard/1U5KEFvaCV",
+          "dashboard_v1": "don:DEV-0:dashboard:1U5KEFvaCV",
+          "label": "drill"
+        }
+      ],
+      "label": "Count",
+      "reference_name": "dim_conversation.avg_first_response_time"
+    }
+  },
+  "type": "heatmap"
 }
-],
-"label": "Count",
-"reference_name": "dim_conversation.avg_first_response_time"
-}
-},
-"type": "heatmap"
-}
+```
 
 Metric:
 
+```json
 "visualization": {
 "metric": {
 "y": [
@@ -407,3 +428,4 @@ Metric:
 },
 "type": "metric"
 }
+```
