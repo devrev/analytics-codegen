@@ -1,0 +1,240 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "db_name": "article_id",
+                        "id_type": [
+                            "article"
+                        ],
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "oasis": {
+                            "name": "article_id"
+                        },
+                        "ui": {
+                            "display_name": "Article"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "article_id",
+                        "type": "string"
+                    },
+                    "reference_name": "article_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "db_name": "parent",
+                        "id_type": [
+                            "directory"
+                        ],
+                        "is_filterable": true,
+                        "name": "parent",
+                        "oasis": {
+                            "name": "parent"
+                        },
+                        "ui": {
+                            "display_name": "Collection"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "parent",
+                        "type": "string"
+                    },
+                    "reference_name": "parent"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "db_name": "record_date",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "oasis": {
+                            "name": "record_date"
+                        },
+                        "ui": {
+                            "display_name": "Date",
+                            "unit": "MMM d, yyy"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "record_date",
+                        "type": "time"
+                    },
+                    "reference_name": "record_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "enum",
+                        "allowed_values": [
+                            "plug",
+                            "portal"
+                        ],
+                        "db_name": "surface",
+                        "is_filterable": true,
+                        "name": "surface",
+                        "oasis": {
+                            "name": "surface"
+                        },
+                        "ui": {
+                            "display_name": "Surface"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "surface",
+                        "type": "string"
+                    },
+                    "reference_name": "surface"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "bool",
+                        "db_name": "is_verified",
+                        "is_filterable": true,
+                        "name": "is_verified",
+                        "oasis": {
+                            "name": "is_verified"
+                        },
+                        "ui": {
+                            "display_name": "Is Verified"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "is_verified",
+                        "type": "boolean"
+                    },
+                    "reference_name": "is_verified"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "db_name": "account_id",
+                        "id_type": [
+                            "account"
+                        ],
+                        "is_filterable": true,
+                        "name": "account_id",
+                        "oasis": {
+                            "name": "account_id"
+                        },
+                        "ui": {
+                            "display_name": "Account"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "account_id",
+                        "type": "string"
+                    },
+                    "reference_name": "account_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "array",
+                        "base_type": "id",
+                        "db_name": "applies_to_part_ids",
+                        "id_type": [
+                            "part"
+                        ],
+                        "is_filterable": true,
+                        "name": "applies_to_part_ids",
+                        "oasis": {
+                            "name": "applies_to_part_ids"
+                        },
+                        "ui": {
+                            "display_name": "Parts"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "applies_to_part_ids",
+                        "type": "string_array"
+                    },
+                    "reference_name": "applies_to_part_ids"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "db_name": "total_views",
+                        "name": "total_views",
+                        "oasis": {
+                            "name": "total_views"
+                        },
+                        "ui": {
+                            "display_name": "Total Views",
+                            "order": 1
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(total_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "total_views"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT * FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "reference_name": "article_views_and_votes_summary",
+            "type": "oasis"
+        }
+    ],
+    "description": "Total number of views across all articles over time",
+    "id": "don:data:dvrv-us-1:widget/UJO62bDz8o",
+    "is_system": true,
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "article-analytics-dashboard-total-views-chart"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "article_views_and_votes_summary.record_date"
+                ],
+                "measures": [
+                    "article_views_and_votes_summary.total_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "article_views_and_votes_summary.record_date"
+                    }
+                ]
+            },
+            "reference_id": "total-views",
+            "visualization": {
+                "line": {
+                    "x": [
+                        {
+                            "label": "Date",
+                            "reference_name": "article_views_and_votes_summary.record_date"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Total Views",
+                            "reference_name": "article_views_and_votes_summary.total_views"
+                        }
+                    ]
+                },
+                "type": "line"
+            }
+        }
+    ],
+    "title": "Total Views"
+}
