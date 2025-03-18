@@ -1,19 +1,56 @@
-# Data Sources
+# Widget Building Guide
 
-## Structure
+This guide explains how to create widgets with the JSON editor. The configuration of the final widget comprises of data sources, visualizations, and how data should be processed and displayed. This ultiamtely creates a JSON file to generate a widget in the UI.
 
-The `data_sources` array is the first section of the JSON file. It looks something like this:
+The process of widget-generation is as follows:
+First, the user will provide you the base SQL query and table schemas.
+The table schemas correspond to the tables referenced within the SQL query. The query either joins multiple tables, or filters them based on aggregate functions or some kind of grouping.
+Use this file to create the final JSON file for the widget, but first...
+Take a look at the other files to generate sub-sectinos of the final JSON, including:
+Data source, which includes dimensions, measures, and datasets specified in the schemas provided, and the base query.
+Visualization and layout, with information about the visualization type and settings/configuration for each sub-widget.
+
+## Widget Configuration Structure
+
+A widget is configured of several key sections:
+
+Data Sources
+Layout
+Sub Widgets
+Visualization Settings
+
+A widget configuration should follow this structure at the top-level:
 
 ```json
-"data_sources": [
+{
+  "data_sources": [
+    // MUST be an array
+    {
+      "type": "oasis", // Required
+      "reference_name": "your_source_name" // Required
+      // ... other data source properties
+    }
+  ],
+  "sub_widgets": [],
+  "title": "Widget Title"
+}
+```
+
+### Widget Structure, Dummy Template
+
+This is a dummy template of what the final widget JSON file should look like.
+It is made up of all of the sections from the other files.
+Plesae follow this exact configuration to construct the final JSON by combining everything together.
+
+```json
+{
+  "data_sources": [
     {
       "dimensions": [
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "work"
-            ],
+            "id_type": ["work"],
             "is_filterable": true,
             "name": "id",
             "ui": {
@@ -28,12 +65,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         },
         {
           "devrev_schema": {
-            "allowed_values": [
-              "High",
-              "Medium",
-              "Low",
-              "Blocker"
-            ],
+            "allowed_values": ["High", "Medium", "Low", "Blocker"],
             "field_type": "enum",
             "is_filterable": true,
             "name": "severity_name",
@@ -66,9 +98,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "account"
-            ],
+            "id_type": ["account"],
             "is_filterable": true,
             "name": "account_id",
             "ui": {
@@ -84,9 +114,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "rev_org"
-            ],
+            "id_type": ["rev_org"],
             "is_filterable": false,
             "name": "rev_oid",
             "ui": {
@@ -117,9 +145,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "account"
-            ],
+            "id_type": ["account"],
             "is_filterable": true,
             "name": "account_id",
             "ui": {
@@ -135,9 +161,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "part"
-            ],
+            "id_type": ["part"],
             "is_filterable": true,
             "name": "primary_part_id",
             "ui": {
@@ -153,9 +177,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "tag"
-            ],
+            "id_type": ["tag"],
             "is_filterable": true,
             "name": "tag_ids",
             "ui": {
@@ -171,9 +193,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "group"
-            ],
+            "id_type": ["group"],
             "is_filterable": true,
             "name": "group_id",
             "ui": {
@@ -204,9 +224,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "part"
-            ],
+            "id_type": ["part"],
             "is_filterable": true,
             "name": "primary_part_id",
             "ui": {
@@ -245,10 +263,7 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         {
           "devrev_schema": {
             "field_type": "id",
-            "id_type": [
-              "dev_user",
-              "rev_user"
-            ],
+            "id_type": ["dev_user", "rev_user"],
             "is_filterable": true,
             "name": "Owner",
             "ui": {
@@ -280,220 +295,97 @@ The `data_sources` array is the first section of the JSON file. It looks somethi
         }
       ],
       "oasis": {
-        "datasets": [
-          "system.support_insights_ticket_metrics_summary"
-        ],
+        "datasets": ["system.support_insights_ticket_metrics_summary"],
         "sql_query": "select record_hour AS record_date,* from system.support_insights_ticket_metrics_summary WHERE account_id IS NOT NULL AND account_id != '' AND state != 'closed'"
       },
       "reference_name": "support_insights_ticket_metrics_summary",
       "type": "oasis"
     }
-  ]
-```
-
-Moreover, each object in the `data_sources` array above requires:
-
-`type`: The source type, in this case, `oasis`
-`reference_name`: Unique identifier used to reference this source
-`oasis`: Configuration for oasis data
-`dimensions`: Array of dimension definitions
-`measures`: Array of measure definitions
-
-The `data_sources` section is the foundation of your widget. It defines:
-
-Datasets and base query
-Dimensions and measures
-Supported field types for dimensions/measures
-
-## Datasets and Base Query
-
-In the `oasis` section:
-
-```json
-"oasis": {
-  "datasets": [
-  // List of tables/datasets to use
-    "system.dataset1",
-    "system.dataset2"
   ],
-    "sql_query": "Your base SQL query goes here"
-}
-```
-
-Here, `datasets` include a list of all tables/views that your SQL query will use, i.e.
-"system.dataset1",
-"system.dataset2"
-from the above. And,`sql_query` is base SQL query that joins and processes your data, i.e.
-"sql_query": "Your base SQL query goes here"
-from the above.
-
-Example - Putting it all together:
-
-```json
-"oasis": {
-  "datasets": [
-    "system.support_insights_ticket_metrics_summary"
+  "description": "A list of your customers and the number of tickets they created, ranked from high to low.",
+  "layout": [
+    {
+      "position": {
+        "height": 1,
+        "width": 1,
+        "x": 0,
+        "y": 0
+      },
+      "reference_id": "subwidget1"
+    }
   ],
-  "sql_query": "select record_hour AS record_date, \* from    system.support_insights_ticket_metrics_summary WHERE account_id IS NOT NULL AND account_id != '' AND state != 'closed'"\
-```
-
-For more information about the base query, see base-query.md file.
-
-## Reference Names for Data Source
-
-They must be unique within the widget
-Should match the primary table/view name
-Used to qualify all dimension and measure references
-
-```json
-{
-  "type": "oasis",
-  "reference_name": "your_source_name" // This name must be used to qualify fields
-  // ... other configuration
-}
-```
-
-## Dimensions
-
-Dimensions represent filters of your base query. They are the categorical, non-numerical columns within the table.
-They have the following values within them:
-
-`field_type`: The type of field, i.e. id, timestamp, enum, bool, tokens, array
-`db_name`: Database column name
-`name`: Reference name for the field
-`is_filterable`: Whether this field can be used as a filter
-`ui`: Display settings for the field
-
-Example dimension:
-
-```json
-{
-  "devrev_schema": {
-    "field_type": "timestamp",
-    "db_name": "record_date",
-    "is_filterable": true,
-    "name": "record_date",
-    "ui": {
-      "display_name": "Date"
+  "sub_widgets": [
+    {
+      "query": {
+        "dimensions": ["support_insights_ticket_metrics_summary.account_id"],
+        "measures": [
+          "support_insights_ticket_metrics_summary.unique_ids_count"
+        ],
+        "order_by": [
+          {
+            "direction": "descending",
+            "reference_name": "support_insights_ticket_metrics_summary.unique_ids_count"
+          }
+        ]
+      },
+      "reference_id": "subwidget1",
+      "visualization": {
+        "table": {
+          "columns": [
+            {
+              "drill_throughs": [
+                {
+                  "dashboard": "don:data:dvrv-global:dashboard/dn7qoVCoiD",
+                  "label": "drill"
+                }
+              ],
+              "label": "Account",
+              "reference_name": "support_insights_ticket_metrics_summary.account_id"
+            },
+            {
+              "label": "Count",
+              "reference_name": "support_insights_ticket_metrics_summary.unique_ids_count"
+            }
+          ]
+        },
+        "type": "table"
+      }
     }
-  },
-  "meerkat_schema": {
-    "sql_expression": "record_date",
-    "type": "time"
-  }
+  ],
+  "title": "Customer Impact"
 }
 ```
 
-## Measures
+### 1. Data Sources
 
-Measures define numerical columns within your base query. They are normally result sets of aggregate function in the base query.
-Each measure includes the following values:
+Please see data-source.md file to generate the data soruce first.
 
-`field_type`: Data type (int, double, etc.)
-`db_name`: Column name for the measure
-`name`: Reference name
-`ui`: Display settings
-`sql_expression`: The aggregation function to apply
+### 2. Sub Widgets
 
-Example measure:
+Next, take a look at wub-widgets.md file to generate the sub-widgets' section.
 
-```json
-{
-  "devrev_schema": {
-    "field_type": "int",
-    "db_name": "total_views",
-    "name": "total_views",
-    "ui": {
-      "display_name": "Total Views"
-    }
-  },
-  "meerkat_schema": {
-    "sql_expression": "COUNT(e_article_id)",
-    "type": "number"
-  }
-}
-```
+### 3. Visualization Types
 
-## Field Types in Dimensions and Measures
+Located within sub-widgets.md
 
-When defining dimensions and measures, field types need to be defined.
-These field types are native to DevRev, the company.
-Here is a list of possible field type values for each type of variable.
-Please look at the table schemas provided by the user to determine the best-fit field type below.
-And pay particular attention to the notes below some of the categories below.
+## Example Use Case for Widget creation
 
-Numeric Types:
+To create a new widget:
 
-`int`: Integer values
-`double`: Floating-point numbers
-`decimal`: Precise decimal numbers
-`currency`: Monetary values
+First, identify the datasets and their schema from the user input
+Test the base query provided, if it is wrong, fix it.
+Define dimensions for filtering
+Define measures for aggregations
+Add query, dimensions, measures and other requirements to data source.
+Select and configure the visualization type for the widget
+Test the complete widget. If an error occurs, fix the JSON accordingly.
 
-Note: Use appropriate numeric types, i.e. `int`, `double`, `decimal` based on the precision of the values within the numerical column.
+## Best Practices Checklist
 
-Boolean Type\*\*
+IMPORTANT: MUST follow before submitting a widget configuration:
 
-`bool`: True/false values
-
-Text Types
-
-`string`: Basic string values
-`text`: Longer text content
-`tokens`: Tokenized text for search/filtering
-`rich_text`: Formatted text with markup
-`bytes`: Binary data
-
-Note: Choose between text types based on the content within the column and requirements for searching through this data.
-
-Time Type:
-
-`timestamp`: Date and time values
-
-Note: Use `timestamp` for all date/time fields.
-
-Reference Types:
-
-`id`: Unique identifiers
-`overridable_enum`: Enumerated values that can be overridden
-`uenum`: User-defined enumeration
-`reference_enum`: Reference to enumerated values
-
-Note: Select correct enumeration type, i.e. `overridable_enum`, `uenum`, `reference_enum` based on value source
-
-Example of choosing field types for a dimension:
-
-```json
-{
-  "devrev_schema": {
-    "field_type": "timestamp", // One of the supported field types
-    "db_name": "created_date",
-    "is_filterable": true,
-    "name": "created_date",
-    "ui": {
-      "display_name": "Creation Date"
-    }
-  },
-  "meerkat_schema": {
-    "sql_expression": "created_date",
-    "type": "time"
-  }
-}
-```
-
-Note: Similar process for measures.
-
-## Reference Names for Dimensions and Measures
-
-Must include data source reference name
-Format: `your_source_name.field_name`
-Example: `your_source_name.your_dimension`
-
-## Best Practices
-
-Use meaningful names for dimensions and measures
-In measures and dimensions, use direct column names
-Include appropriate filters in dimensions
-Consider performance implications of complex joins
-Use appropriate field types for better UI interaction
-Avoid table aliases in sql_expression fields
-Use proper column qualification when names are ambiguous
+✓ All dimension/measure references include data source name
+✓ Visualization structure matches the documented format
+✓ Query includes required order_by for time series
+✓ Reference names are consistent throughout the configuration
+✓ Data source reference_name matches primary data source
