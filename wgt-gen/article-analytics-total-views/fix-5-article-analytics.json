@@ -1,0 +1,373 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "article"
+                        ],
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "ui": {
+                            "display_name": "Article"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "s.article_id",
+                        "type": "string"
+                    },
+                    "reference_name": "article_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "is_filterable": true,
+                        "name": "title",
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "a.title",
+                        "type": "string"
+                    },
+                    "reference_name": "title"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "s.record_date",
+                        "type": "time"
+                    },
+                    "reference_name": "record_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "account"
+                        ],
+                        "is_filterable": true,
+                        "name": "account_id",
+                        "ui": {
+                            "display_name": "Account"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "s.account_id",
+                        "type": "string"
+                    },
+                    "reference_name": "account_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "is_filterable": true,
+                        "name": "surface",
+                        "ui": {
+                            "display_name": "Surface"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "s.surface",
+                        "type": "string"
+                    },
+                    "reference_name": "surface"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "published_date",
+                        "ui": {
+                            "display_name": "Published Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "a.published_date",
+                        "type": "time"
+                    },
+                    "reference_name": "published_date"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "total_views",
+                        "ui": {
+                            "display_name": "Total Views",
+                            "is_compact": true
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(s.total_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "total_views"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "unique_views",
+                        "ui": {
+                            "display_name": "Unique Views",
+                            "is_compact": true
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(s.unique_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "unique_views"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "article_upvotes",
+                        "ui": {
+                            "display_name": "Upvotes",
+                            "is_compact": true
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(s.article_upvotes)",
+                        "type": "number"
+                    },
+                    "reference_name": "article_upvotes"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "article_downvotes",
+                        "ui": {
+                            "display_name": "Downvotes",
+                            "is_compact": true
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(s.article_downvotes)",
+                        "type": "number"
+                    },
+                    "reference_name": "article_downvotes"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": false,
+                        "name": "avg_duration_seconds",
+                        "ui": {
+                            "display_name": "Avg. Read Time",
+                            "precision": 2,
+                            "unit": "seconds"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "AVG(s.total_duration_ms / 1000.0)",
+                        "type": "number"
+                    },
+                    "reference_name": "avg_duration_seconds"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": false,
+                        "name": "engagement_score",
+                        "ui": {
+                            "display_name": "Engagement Score",
+                            "precision": 2
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "(SUM(s.article_upvotes) - SUM(s.article_downvotes)) / NULLIF(SUM(s.unique_views), 0) * 100",
+                        "type": "number"
+                    },
+                    "reference_name": "engagement_score"
+                }
+            ],
+            "oasis": {
+                "sql_query": "SELECT s.*, a.title, a.published_date FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "reference_name": "article_metrics",
+            "type": "oasis"
+        }
+    ],
+    "description": "Track article performance metrics including views, engagement time, and user feedback.",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "top_articles"
+        },
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 1
+            },
+            "reference_id": "views_over_time"
+        },
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 1,
+                "y": 0
+            },
+            "reference_id": "engagement_metrics"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "article_metrics.title"
+                ],
+                "measures": [
+                    "article_metrics.total_views",
+                    "article_metrics.unique_views",
+                    "article_metrics.article_upvotes",
+                    "article_metrics.article_downvotes"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "article_metrics.total_views"
+                    }
+                ],
+                "limit": 10
+            },
+            "reference_id": "top_articles",
+            "visualization": {
+                "table": {
+                    "columns": [
+                        {
+                            "label": "Article",
+                            "reference_name": "article_metrics.title",
+                            "order": 1
+                        },
+                        {
+                            "label": "Total Views",
+                            "reference_name": "article_metrics.total_views",
+                            "order": 2
+                        },
+                        {
+                            "label": "Unique Views",
+                            "reference_name": "article_metrics.unique_views",
+                            "order": 3
+                        },
+                        {
+                            "label": "Upvotes",
+                            "reference_name": "article_metrics.article_upvotes",
+                            "order": 4
+                        },
+                        {
+                            "label": "Downvotes",
+                            "reference_name": "article_metrics.article_downvotes",
+                            "order": 5
+                        }
+                    ]
+                },
+                "type": "table"
+            },
+            "title": "Top Articles by Views"
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "article_metrics.record_date"
+                ],
+                "measures": [
+                    "article_metrics.total_views",
+                    "article_metrics.unique_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "article_metrics.record_date"
+                    }
+                ]
+            },
+            "reference_id": "views_over_time",
+            "visualization": {
+                "line": {
+                    "x": [
+                        {
+                            "label": "Date",
+                            "reference_name": "article_metrics.record_date"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Total Views",
+                            "reference_name": "article_metrics.total_views"
+                        },
+                        {
+                            "label": "Unique Views",
+                            "reference_name": "article_metrics.unique_views"
+                        }
+                    ]
+                },
+                "type": "line"
+            },
+            "title": "Article Views Over Time"
+        },
+        {
+            "query": {
+                "dimensions": [
+                    "article_metrics.surface"
+                ],
+                "measures": [
+                    "article_metrics.total_views",
+                    "article_metrics.avg_duration_seconds",
+                    "article_metrics.engagement_score"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "article_metrics.total_views"
+                    }
+                ]
+            },
+            "reference_id": "engagement_metrics",
+            "visualization": {
+                "column": {
+                    "is_stacked": false,
+                    "x": [
+                        {
+                            "label": "Surface",
+                            "reference_name": "article_metrics.surface"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Engagement Score",
+                            "reference_name": "article_metrics.engagement_score"
+                        }
+                    ]
+                },
+                "type": "column"
+            },
+            "title": "Engagement by Surface"
+        }
+    ],
+    "title": "Article Performance Dashboard"
+}
