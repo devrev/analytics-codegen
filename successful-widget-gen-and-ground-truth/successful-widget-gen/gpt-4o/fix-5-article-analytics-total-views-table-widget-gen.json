@@ -1,0 +1,134 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "article"
+                        ],
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "ui": {
+                            "display_name": "Article ID"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "articles_view_data.article_id",
+                        "type": "string"
+                    },
+                    "reference_name": "article_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "is_filterable": true,
+                        "name": "title",
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "articles_view_data.title",
+                        "type": "string"
+                    },
+                    "reference_name": "title"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "ui": {
+                            "display_name": "Record Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "articles_view_data.record_date",
+                        "type": "time"
+                    },
+                    "reference_name": "record_date"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "total_views",
+                        "ui": {
+                            "display_name": "Total Article Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(articles_view_data.total_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "total_views"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT * FROM system.article_views_and_votes_summary LEFT OUTER JOIN system.dim_article ON system.article_views_and_votes_summary.article_id = system.dim_article.id AND system.dim_article.is_deleted != true"
+            },
+            "reference_name": "articles_view_data",
+            "type": "oasis"
+        }
+    ],
+    "description": "Displays the total number of views for articles.",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "subwidget1"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "articles_view_data.article_id",
+                    "articles_view_data.title"
+                ],
+                "measures": [
+                    "articles_view_data.total_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "articles_view_data.total_views"
+                    }
+                ]
+            },
+            "reference_id": "subwidget1",
+            "visualization": {
+                "table": {
+                    "columns": [
+                        {
+                            "label": "Article ID",
+                            "reference_name": "articles_view_data.article_id"
+                        },
+                        {
+                            "label": "Article Title",
+                            "reference_name": "articles_view_data.title"
+                        },
+                        {
+                            "label": "Total Views",
+                            "reference_name": "articles_view_data.total_views"
+                        }
+                    ]
+                },
+                "type": "table"
+            }
+        }
+    ],
+    "title": "Total Article Views"
+}

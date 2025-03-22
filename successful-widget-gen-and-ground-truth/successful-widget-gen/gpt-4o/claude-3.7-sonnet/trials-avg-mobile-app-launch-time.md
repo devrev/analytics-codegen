@@ -1,0 +1,116 @@
+# Input
+
+Given the base SQL query:
+SELECT network_operator, AVG(app_launch_time) AS avg_launch_time
+FROM system.mobile_sessions_metadatas_v1
+GROUP BY network_operator ORDER BY avg_launch_time
+
+And the table schema: mobile_sessions_metadatas_v1
+Schema
+session_id
+session_id
+VARCHAR
+created_at
+TIMESTAMP
+version_key
+VARCHAR
+identifier
+VARCHAR
+network_operator
+VARCHAR
+network_type
+VARCHAR
+first_user_interaction
+BIGINT
+app_launch_time
+BIGINT
+app_launch_type
+VARCHAR
+device_manufacturer
+VARCHAR
+device_name
+VARCHAR
+app_version
+VARCHAR
+exception_type
+VARCHAR
+error_count
+BIGINT
+is_rage
+BIGINT
+ux_evaluation
+VARCHAR
+platform
+VARCHAR
+
+Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of average app launch time in a bar graph.
+
+# Follow-Up
+
+ <paste error here>
+
+# Trials
+
+## Fix 5 - Cheat Sheet
+
+don:data:dvrv-us-1:devo/0:widget/QhczBI3Cmf
+
+- Donut chart - top 5 values - successful!
+
+don:data:dvrv-us-1:devo/0:widget/LNqYcscHP7
+
+- Table representation w/ top 5 values - successful!
+
+don:data:dvrv-us-1:devo/0:widget/Rgzd2EV4C1
+
+- Table representation w/o NULL values - successful!
+
+WRONG IDs:
+don:data:dvrv-us-1:devo/0:widget/fUJkeFSsqm
+don:data:dvrv-us-1:devo/0:widget/rtrsJxHC82
+
+- Column chart representaiton that does not display
+- Initially created widget, but no graph
+
+  Error: Binder Error: Referenced column "app_launch_time" not found in FROM clause! Candidate bindings: "mobile_sessions_metadatas_v1.average_app_launch_time" LINE 1: SELECT AVG(app_launch_time) AS mobile_sessions_met... ^
+
+- This error was seen thrice
+  - Fixed 3rd time
+
+Failed to create widget - Invalid field: precision
+
+It created a widget, but i cannot see the graph. Is this because precision field was removed?
+
+- Gave two outputs:
+  - Changed visualization to column (vertical) bar graph
+    - Created widget w/o display
+  - Changed visualization to table, removing any possible NULL values by modifying query
+    - Worked after NULL values removed
+
+The table visualization worked! Cuold you convert this to a column chart?
+
+- Appaeared, but could not create widget
+
+The column chart does not display. Could you convert it to another visualization that is not a table, but appropriately displays?
+
+- Produced a line and donut chart JSON config
+  - Both appeared momentarily on screen, but again did not display when widget was created
+
+None of these charts are displaying. Once you click on the metrics to find out what they are, the graph suddenly disappears. What might be the problem?
+
+- Produced a line and donut chart
+- Both did not display
+
+None of these charts are displaying. Once you click on the metrics to find out what they are, the graph suddenly disappears. What might be the problem?
+
+- Produced a matric chart that worked (NOTE: ID not saved above)
+- Created a table of top 5 values that had an error:
+
+For the top five table:
+Expected double-quoted property name in JSON at position 1665 (line 50 column 21)
+
+- Fixed error, successful widget creation!
+
+It created successfully, could you convert this into a donut chart?
+
+- Successful donut widget created!

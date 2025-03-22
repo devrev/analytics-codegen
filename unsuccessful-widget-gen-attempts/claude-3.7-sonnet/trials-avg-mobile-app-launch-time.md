@@ -1,7 +1,9 @@
 ### Input
 
 Base query:
-SELECT network_operator, app_launch_time FROM system.mobile_sessions_metadatas_v1
+SELECT network_operator, AVG(app_launch_time) AS avg_launch_time
+FROM system.mobile_sessions_metadatas_v1
+GROUP BY network_operator ORDER BY avg_launch_time
 
 Schema:
 mobile_sessions_metadatas_v1
