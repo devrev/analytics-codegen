@@ -1,5 +1,16 @@
 # Widgets Generated
 
+## Fix 6 - Mobile Launch Time
+
+Avg. App Launch Time - Table:
+don:data:dvrv-us-1:devo/0:widget/6P9LHCAM7U
+
+Avg. App Launch Time - Bar Chart:
+don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+
+Avg. vs. Max. launch time - Stacked-bar graph
+don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+
 ## Fix 5 - Ave. Mobile Launch Time
 
 Donut chart: top 5 avg. launch times / network operator

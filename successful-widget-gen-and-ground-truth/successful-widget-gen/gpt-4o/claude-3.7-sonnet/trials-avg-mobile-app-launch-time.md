@@ -51,6 +51,63 @@ Understand the widget building guide below fully for how to create a widget. Kee
 
 # Trials
 
+## Fix 6 - Instructions + Code
+
+Success: Binder Error solved quicker, precision error solved again in one shot
+
+don:data:dvrv-us-1:devo/0:widget/6P9LHCAM7U
+
+- Table w/o NULL values - successful!
+
+don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+
+- Bar chart - all values - successful!
+
+don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+
+- Stacked-bar graph: Avg. vs Max. launch time - successful!
+
+WRONG WIDGETS:
+
+- First couple do not display, like last time
+
+CONVO:
+
+Error: Binder Error: Referenced column "app_launch_time" not found in FROM clause! Candidate bindings: "mobile_sessions_data.avg_launch_time" LINE 1: SELECT AVG(app_launch_time) AS mobile_sessions_dat... ^
+
+- Fixed in one shot!
+  - Unlike last time, which took 3x
+  - This means added instructions worked!
+
+Failed to create widget - Invalid field: precision
+
+- Fixes error - just like last time!
+
+Widget created successfully! But it deos nto display. What can be done?
+
+- Suggests options: null handling, permission issues
+  - Applies these fixes to file
+  - None of which work
+
+Widget created successfully, but it still does not display
+
+- Switches to table visualization
+  - Simplifies query - query issue
+  - Adds NULL handling
+
+Could you make this into a bar graph? And line chart?
+
+- Successfully creates both graphs
+  - Understands that we need two separate widgets
+  - Creates two different, working JSONs, as expected (see above IDs)
+
+Now, could you make a stacked bar graph with avg. vs total launch times?
+
+- Successfully produces stacked bar graph
+  - Realizes that total time is not a good metric
+  - Suggests maximum launch time, instead
+  - Creates widget that works! (Imporvement from last time:)
+
 ## Fix 5 - Cheat Sheet
 
 don:data:dvrv-us-1:devo/0:widget/QhczBI3Cmf
@@ -72,7 +129,8 @@ don:data:dvrv-us-1:devo/0:widget/rtrsJxHC82
 - Column chart representaiton that does not display
 - Initially created widget, but no graph
 
-  Error: Binder Error: Referenced column "app_launch_time" not found in FROM clause! Candidate bindings: "mobile_sessions_metadatas_v1.average_app_launch_time" LINE 1: SELECT AVG(app_launch_time) AS mobile_sessions_met... ^
+CONVO:
+Error: Binder Error: Referenced column "app_launch_time" not found in FROM clause! Candidate bindings: "mobile_sessions_metadatas_v1.average_app_launch_time" LINE 1: SELECT AVG(app_launch_time) AS mobile_sessions_met... ^
 
 - This error was seen thrice
   - Fixed 3rd time
