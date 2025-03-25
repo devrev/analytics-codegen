@@ -1,0 +1,248 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "work"
+                        ],
+                        "is_filterable": true,
+                        "name": "id",
+                        "ui": {
+                            "display_name": "Id"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "id",
+                        "type": "string"
+                    },
+                    "reference_name": "id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "created_date",
+                        "ui": {
+                            "display_name": "Created Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "created_date",
+                        "type": "time"
+                    },
+                    "reference_name": "created_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "is_filterable": true,
+                        "name": "mitigated_date",
+                        "ui": {
+                            "display_name": "Mitigated Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "mitigated_date",
+                        "type": "time"
+                    },
+                    "reference_name": "mitigated_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "part"
+                        ],
+                        "is_filterable": true,
+                        "name": "part_ids",
+                        "ui": {
+                            "display_name": "Part"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "part_ids",
+                        "type": "string_array"
+                    },
+                    "reference_name": "part_ids"
+                },
+                {
+                    "devrev_schema": {
+                        "composite_type": "stage",
+                        "field_type": "composite",
+                        "is_filterable": true,
+                        "name": "stage_id",
+                        "ui": {
+                            "display_name": "Stage"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "stage_id",
+                        "type": "string"
+                    },
+                    "reference_name": "stage_id"
+                },
+                {
+                    "devrev_schema": {
+                        "allowed_values": [
+                            "open",
+                            "closed",
+                            "in_progress"
+                        ],
+                        "field_type": "enum",
+                        "is_filterable": true,
+                        "name": "state",
+                        "ui": {
+                            "display_name": "State"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "state",
+                        "type": "string"
+                    },
+                    "reference_name": "state"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "severity"
+                        ],
+                        "is_filterable": true,
+                        "name": "severity_id",
+                        "ui": {
+                            "display_name": "Severity"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "severity_id",
+                        "type": "string"
+                    },
+                    "reference_name": "severity_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "id",
+                        "id_type": [
+                            "dev_user",
+                            "rev_user"
+                        ],
+                        "is_filterable": true,
+                        "name": "owned_by",
+                        "ui": {
+                            "display_name": "Owner"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "owned_by_ids",
+                        "type": "string_array"
+                    },
+                    "reference_name": "owned_by_ids"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": true,
+                        "name": "incident_count",
+                        "ui": {
+                            "display_name": "Incident Count"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "COUNT(DISTINCT id)",
+                        "type": "number"
+                    },
+                    "reference_name": "incident_count"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.dim_incident"
+                ],
+                "sql_query": "SELECT id, created_date, mitigated_date, identified_date, actual_close_date, applies_to_part_ids AS part_ids, JSON_EXTRACT_STRING (stage_json, '$.stage_id') AS stage_id, state, JSON_EXTRACT_STRING (severity_json, '$.id') AS severity_id, owned_by_ids, JSON_EXTRACT_STRING (impact, '$.customer_ids[*]') AS impacted_customers FROM system.dim_incident"
+            },
+            "reference_name": "dim_incident",
+            "type": "oasis"
+        }
+    ],
+    "description": "Shows the count of incidents by severity over time",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "subwidget1"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "dim_incident.created_date",
+                    "dim_incident.severity_id"
+                ],
+                "measures": [
+                    "dim_incident.incident_count"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "dim_incident.created_date"
+                    }
+                ]
+            },
+            "reference_id": "subwidget1",
+            "visualization": {
+                "column": {
+                    "is_stacked": true,
+                    "x": [
+                        {
+                            "label": "Created Date",
+                            "reference_name": "dim_incident.created_date"
+                        },
+                        {
+                            "color": {
+                                "key_lookup": [
+                                    {
+                                        "key": "SEV1",
+                                        "value": "chart-alert-base"
+                                    },
+                                    {
+                                        "key": "SEV2",
+                                        "value": "chart-alert-lighter"
+                                    },
+                                    {
+                                        "key": "SEV3",
+                                        "value": "chart-category-2-base"
+                                    },
+                                    {
+                                        "key": "SEV4",
+                                        "value": "chart-category-3-base"
+                                    }
+                                ],
+                                "type": "key_lookup"
+                            },
+                            "label": "Severity",
+                            "reference_name": "dim_incident.severity_id"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Incident Count",
+                            "reference_name": "dim_incident.incident_count"
+                        }
+                    ]
+                },
+                "type": "column"
+            }
+        }
+    ],
+    "title": "Incident Count by Severity"
+}
