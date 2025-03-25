@@ -1,0 +1,116 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "is_filterable": true,
+                        "name": "network_operator",
+                        "ui": {
+                            "display_name": "Network Operator"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "COALESCE(network_operator, 'Unknown')",
+                        "type": "string"
+                    },
+                    "reference_name": "network_operator"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": false,
+                        "name": "avg_launch_time",
+                        "ui": {
+                            "display_name": "Average Launch Time"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "AVG(CAST(app_launch_time AS DOUBLE))",
+                        "type": "number"
+                    },
+                    "reference_name": "avg_launch_time"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "row_count",
+                        "ui": {
+                            "display_name": "Number of Records"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "COUNT(*)",
+                        "type": "number"
+                    },
+                    "reference_name": "row_count"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.mobile_sessions_metadatas_v1"
+                ],
+                "sql_query": "SELECT * FROM system.mobile_sessions_metadatas_v1"
+            },
+            "reference_name": "mobile_sessions_data",
+            "type": "oasis"
+        }
+    ],
+    "description": "Diagnostic table showing data availability in the mobile sessions table",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "diagnostic_table"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "mobile_sessions_data.network_operator"
+                ],
+                "measures": [
+                    "mobile_sessions_data.avg_launch_time",
+                    "mobile_sessions_data.row_count"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "mobile_sessions_data.row_count"
+                    }
+                ],
+                "limit": 100
+            },
+            "reference_id": "diagnostic_table",
+            "visualization": {
+                "table": {
+                    "columns": [
+                        {
+                            "label": "Network Operator",
+                            "reference_name": "mobile_sessions_data.network_operator"
+                        },
+                        {
+                            "label": "Record Count",
+                            "reference_name": "mobile_sessions_data.row_count"
+                        },
+                        {
+                            "label": "Avg Launch Time",
+                            "reference_name": "mobile_sessions_data.avg_launch_time"
+                        }
+                    ]
+                },
+                "type": "table"
+            }
+        }
+    ],
+    "title": "Mobile Sessions Data - Diagnostic View"
+}
