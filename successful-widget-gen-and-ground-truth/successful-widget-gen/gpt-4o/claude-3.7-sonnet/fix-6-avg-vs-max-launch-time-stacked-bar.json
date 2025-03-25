@@ -1,0 +1,143 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "is_filterable": true,
+                        "name": "network_operator",
+                        "ui": {
+                            "display_name": "Network Operator"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "COALESCE(network_operator, 'Unknown')",
+                        "type": "string"
+                    },
+                    "reference_name": "network_operator"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": false,
+                        "name": "avg_launch_time",
+                        "ui": {
+                            "display_name": "Average Launch Time"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "AVG(CAST(app_launch_time AS DOUBLE))",
+                        "type": "number"
+                    },
+                    "reference_name": "avg_launch_time"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "double",
+                        "is_filterable": false,
+                        "name": "max_launch_time",
+                        "ui": {
+                            "display_name": "Maximum Launch Time"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "MAX(CAST(app_launch_time AS DOUBLE))",
+                        "type": "number"
+                    },
+                    "reference_name": "max_launch_time"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "is_filterable": false,
+                        "name": "session_count",
+                        "ui": {
+                            "display_name": "Number of Sessions"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "COUNT(*)",
+                        "type": "number"
+                    },
+                    "reference_name": "session_count"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.mobile_sessions_metadatas_v1"
+                ],
+                "sql_query": "SELECT * FROM system.mobile_sessions_metadatas_v1 WHERE app_launch_time IS NOT NULL AND app_launch_time > 0"
+            },
+            "reference_name": "mobile_sessions_data",
+            "type": "oasis"
+        }
+    ],
+    "description": "Comparison of average and maximum app launch times by network operator",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "stacked_bar_chart"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "mobile_sessions_data.network_operator"
+                ],
+                "measures": [
+                    "mobile_sessions_data.avg_launch_time",
+                    "mobile_sessions_data.max_launch_time",
+                    "mobile_sessions_data.session_count"
+                ],
+                "order_by": [
+                    {
+                        "direction": "descending",
+                        "reference_name": "mobile_sessions_data.session_count"
+                    }
+                ],
+                "limit": 10
+            },
+            "reference_id": "stacked_bar_chart",
+            "visualization": {
+                "column": {
+                    "is_stacked": true,
+                    "x": [
+                        {
+                            "label": "Network Operator",
+                            "reference_name": "mobile_sessions_data.network_operator"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "color": {
+                                "static": "chart-category-1-base",
+                                "type": "static"
+                            },
+                            "label": "Average Launch Time (ms)",
+                            "reference_name": "mobile_sessions_data.avg_launch_time"
+                        },
+                        {
+                            "color": {
+                                "static": "chart-category-2-base",
+                                "type": "static"
+                            },
+                            "label": "Maximum Launch Time (ms)",
+                            "reference_name": "mobile_sessions_data.max_launch_time"
+                        }
+                    ]
+                },
+                "type": "column"
+            }
+        }
+    ],
+    "title": "App Launch Time Comparison by Network Operator"
+}
