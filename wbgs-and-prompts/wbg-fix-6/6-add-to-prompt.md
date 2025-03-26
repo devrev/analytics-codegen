@@ -2,9 +2,10 @@
 
 ## Prompt: Fix 6
 
-1. Fix SQL query before proceding
+1. Test edge-case
 
-   - Look at Binder Errors and suggest ideas
+   - Fix user-specified SQL query before proceding
+     - Look at Binder Errors and suggest ideas
 
 2. Ensure widget config does not include added fields
 
