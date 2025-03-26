@@ -1,5 +1,13 @@
 # Widgets Generated
 
+## Fix 6 - Article Analysis Total Views
+
+Unique Views Over Time - Line Graph
+don:data:dvrv-us-1:devo/0:widget/xJsjnlct4R
+
+Total Views Over Time - Line Graph
+don:data:dvrv-us-1:devo/0:widget/6dGrrQVEiD
+
 ## Fix 6 - 360Dev: Incident Count
 
 Performance Incident Count - Column Chart
@@ -14,7 +22,7 @@ Avg. App Launch Time - Bar Chart:
 don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
 
 Avg. vs. Max. launch time - Stacked-bar graph
-don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+don:data:dvrv-us-1:devo/0:widget/aINjCe65uf
 
 ## Fix 5 - Ave. Mobile Launch Time
 

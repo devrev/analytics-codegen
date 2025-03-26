@@ -9,6 +9,84 @@ Understand the widget building guide below fully for how to create a widget. Kee
 
 # Output
 
+## Fix 6 - Code + Instructions
+
+### Unique Views Line Graph
+
+ID:
+
+don:data:dvrv-us-1:devo/0:widget/xJsjnlct4R
+
+- Unique Views Over Time - Line Graph
+
+CONVO:
+
+Error: Binder Error: Referenced table "s" not found! Candidate tables: "article*views" LINE 1: ...cle_views**record_date FROM (SELECT \*, s.record_date AS article_views**record*... ^
+
+- Just like before -> see below
+
+Failed to create widget - Invalid field: is_compact
+
+- Just like before -> see below
+
+Widget Created Successfully!
+
+- Just like before -> see below
+  - After only 2 errors
+
+### Total Views Line Graph
+
+ID:
+don:data:dvrv-us-1:devo/0:widget/6dGrrQVEiD
+
+- Total Views Over Time - Line Graph
+
+CONVO:
+
+Error: Binder Error: Referenced table "s" not found! Candidate tables: "article_views_data" LINE 1: ...iews_data**record_date FROM (SELECT \*, s.record_date AS article_views_data**re... ^
+
+- Just like before -> see below
+
+Failed to create widget - Invalid field: is_compact
+
+- Just like before -> see below
+
+Widget Created Successfully!
+
+- After only 2 errors!
+  - Need to modify in following prompt, fix-7
+
+### Top 10 Total Views Column Chart
+
+don:data:dvrv-us-1:devo/0:widget/b556DCvnrJ
+
+- Total views table: NOT a bar graph, but produced by model
+
+don:data:dvrv-us-1:devo/0:widget/SsnyslLDac
+
+- Top 10 Total views - column chart
+
+CONVO:
+
+Failed to create widget - Invalid field: is_compact
+
+- Removed field, got another error...
+
+Error: Binder Error: Referenced table "s" not found! Candidate tables: "article*views" LINE 1: ... article_views**title FROM (SELECT \*, s.record_date AS article_views**record*... ^
+
+- Identified correct issue in SQL query
+  - Changed table aliases accordingly!
+
+Widget craeted successfully, but not displayed
+
+- Conerts config to table for better data handling
+
+Could you convert into a column chart?
+
+- Successfuly creates column widget!
+  - But uses top 10 values--good call, since all values are too much/do not display
+    - Successfully follows modified instructions from fix 5 in wbg!
+
 ## Fix 5 - Cheat Sheet
 
 ### Article Analysis - Total Views + Unique Views Stacked-Bar Graph
@@ -17,7 +95,6 @@ Understand the widget building guide below fully for how to create a widget. Kee
   - Table name does not exist in system
     - This error was fixed in total views table example below, but not this one
     - gpt-4o kept asking to manually test the SQL query by finding the correct table name, which is not autonomous
-
 
 Error: Catalog Error: Table with name article_views_and_votes_summary does not exist! Did you mean "pg_catalog.pg_views"? LINE 1: ...te, s.total_views, s.unique_views FROM system.article_views_and_votes_summary ... ^
 

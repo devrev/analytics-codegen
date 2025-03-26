@@ -63,7 +63,7 @@ don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
 
 - Bar chart - all values - successful!
 
-don:data:dvrv-us-1:devo/0:widget/GgFUkaAAtK
+don:data:dvrv-us-1:devo/0:widget/aINjCe65uf
 
 - Stacked-bar graph: Avg. vs Max. launch time - successful!
 
