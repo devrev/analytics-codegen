@@ -1,0 +1,149 @@
+{
+    "data_sources": [
+        {
+            "dimensions": [
+                {
+                    "devrev_schema": {
+                        "field_type": "timestamp",
+                        "data_name": "record_date",
+                        "db_name": "record_date",
+                        "is_filterable": true,
+                        "name": "record_date",
+                        "oasis": {
+                            "name": "record_date"
+                        },
+                        "ui": {
+                            "display_name": "Date"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "record_date",
+                        "type": "time"
+                    },
+                    "reference_name": "record_date"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "data_name": "article_id",
+                        "db_name": "article_id",
+                        "is_filterable": true,
+                        "name": "article_id",
+                        "oasis": {
+                            "name": "article_id"
+                        },
+                        "ui": {
+                            "display_name": "Article ID"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "article_id",
+                        "type": "string"
+                    },
+                    "reference_name": "article_id"
+                },
+                {
+                    "devrev_schema": {
+                        "field_type": "text",
+                        "data_name": "title",
+                        "db_name": "title",
+                        "is_filterable": true,
+                        "name": "title",
+                        "oasis": {
+                            "name": "title"
+                        },
+                        "ui": {
+                            "display_name": "Article Title"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "title",
+                        "type": "string"
+                    },
+                    "reference_name": "title"
+                }
+            ],
+            "measures": [
+                {
+                    "devrev_schema": {
+                        "field_type": "int",
+                        "data_name": "unique_views",
+                        "db_name": "unique_views",
+                        "is_filterable": false,
+                        "name": "unique_views",
+                        "oasis": {
+                            "name": "unique_views"
+                        },
+                        "ui": {
+                            "display_name": "Unique Views"
+                        }
+                    },
+                    "meerkat_schema": {
+                        "sql_expression": "SUM(unique_views)",
+                        "type": "number"
+                    },
+                    "reference_name": "unique_views"
+                }
+            ],
+            "oasis": {
+                "datasets": [
+                    "system.article_views_and_votes_summary",
+                    "system.dim_article"
+                ],
+                "sql_query": "SELECT * FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true"
+            },
+            "reference_name": "article_views",
+            "type": "oasis"
+        }
+    ],
+    "description": "Displays unique article views over time to track content engagement trends",
+    "id": "don:data:dvrv-us-1:devo/0:widget/xJsjnlct4R",
+    "layout": [
+        {
+            "position": {
+                "height": 1,
+                "width": 1,
+                "x": 0,
+                "y": 0
+            },
+            "reference_id": "unique_views_line_chart"
+        }
+    ],
+    "sub_widgets": [
+        {
+            "query": {
+                "dimensions": [
+                    "article_views.record_date"
+                ],
+                "measures": [
+                    "article_views.unique_views"
+                ],
+                "order_by": [
+                    {
+                        "direction": "ascending",
+                        "reference_name": "article_views.record_date"
+                    }
+                ]
+            },
+            "reference_id": "unique_views_line_chart",
+            "visualization": {
+                "line": {
+                    "x": [
+                        {
+                            "label": "Date",
+                            "reference_name": "article_views.record_date"
+                        }
+                    ],
+                    "y": [
+                        {
+                            "label": "Unique Views",
+                            "reference_name": "article_views.unique_views"
+                        }
+                    ]
+                },
+                "type": "line"
+            }
+        }
+    ],
+    "title": "Unique Article Views Over Time"
+}
