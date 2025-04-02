@@ -1,47 +1,10 @@
 # Input
 
 Given the base SQL query:
-SELECT network_operator, AVG(app_launch_time) AS avg_launch_time
-FROM system.mobile_sessions_metadatas_v1
-GROUP BY network_operator ORDER BY avg_launch_time
+SELECT network_operator, AVG(app_launch_time) AS avg_launch_time FROM system.mobile_sessions_metadatas_v1 GROUP BY network_operator ORDER BY avg_launch_time
 
-And the table schema: mobile_sessions_metadatas_v1
-Schema
-session_id
-session_id
-VARCHAR
-created_at
-TIMESTAMP
-version_key
-VARCHAR
-identifier
-VARCHAR
-network_operator
-VARCHAR
-network_type
-VARCHAR
-first_user_interaction
-BIGINT
-app_launch_time
-BIGINT
-app_launch_type
-VARCHAR
-device_manufacturer
-VARCHAR
-device_name
-VARCHAR
-app_version
-VARCHAR
-exception_type
-VARCHAR
-error_count
-BIGINT
-is_rage
-BIGINT
-ux_evaluation
-VARCHAR
-platform
-VARCHAR
+And the table schema:
+mobile_sessions_metadatas_v1Schema session_id VARCHAR created_at TIMESTAMP version_key VARCHAR identifier VARCHAR network_operator VARCHAR network_type VARCHAR first_user_interaction BIGINT app_launch_time BIGINT app_launch_type VARCHAR device_manufacturer VARCHAR device_name VARCHAR app_version VARCHAR exception_type VARCHAR error_count BIGINT is_rage BIGINT ux_evaluation VARCHAR platform VARCHAR
 
 Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of average app launch time in a bar graph.
 

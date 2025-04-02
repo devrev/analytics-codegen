@@ -24,3 +24,10 @@ ADD to CLI:
    - Ask before changing visualization type or what data the widget displays
 
 2. User permission to access data
+
+   - Admin permission
+
+3. Ensure user provides two things, outside of base query/schema:
+   - Widget description - what it displays
+   - Widget title - IF desired!
+   - Visualization type

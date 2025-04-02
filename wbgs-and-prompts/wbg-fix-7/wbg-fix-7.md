@@ -3,9 +3,49 @@
 ## Base Query
 
 Change base query before inserting in sample widget template below.
-Repalce table aliases with their names in query.
-Replace aggregate functions with only the column names in query
+Remove all table aliases and use entire table names in query.
+Replace aggregate functions with only the column names in query.
+Filter only necessary columns for widget generation in query.
 Add NULL-value handling to take care of any non-existent data in query.
+
+Also, try the following, if applicable:
+
+For metrics and measures:
+Apply appropriate aggregation functions (SUM, AVG, COUNT) to all measure columns.
+Always use COALESCE(column, 0) inside aggregation functions to handle NULL values.
+
+For dimensions (non-aggregated columns):
+Include ALL dimension columns in the GROUP BY clause.
+For time-series visualizations, always include date/timestamp columns in GROUP BY clause.
+
+For mixed columns (sometimes grouped, sometimes aggregated):
+When a column appears in both dimension and measure contexts, use aggregation in the measure.
+Example:
+
+```sql
+SUM(COALESCE(unique_views, 0)) as total_unique_views
+```
+
+for measures.
+Use the raw column in GROUP BY for dimensions.
+
+For columns where exact values aren't important but needed for display:
+Use ANY_VALUE() function.
+Example:
+
+```sql
+ANY_VALUE(title) AS title
+```
+
+Don't include these in GROUP BY unless needed for accurate grouping.
+
+Always test queries with explicit GROUP BY clauses before finalizing widgets.
+
+For time-series data, consider adding date truncation functions
+
+```sql
+DATE_TRUNC('day', timestamp_col)
+```
 
 ## Initial Widget - Sample Template
 
@@ -328,6 +368,9 @@ NOTE: Initially, the widget configuration should look like this:
 ## Create Widget
 
 ### Dimensions / Measure
+
+NOTE: Add only necessary dimensions/measures for widget here.
+NOTE: Do not add any extra fields to devrev/meerkat schema that are not listed below.
 
 enums
 
@@ -1187,4 +1230,4 @@ NOTE: Remove any added fields that are not mentioned within this guide.
 }
 ```
 
-NOTE: If widget is created successfully, but the visualization does not show, ask before assuming changing base query or visualization type.
+NOTE: If widget is created successfully, but the visualization does not show, ask before assuming or changing base query or visualization type.

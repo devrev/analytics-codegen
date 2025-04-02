@@ -1,5 +1,13 @@
 # Widgets Generated
 
+## Fix 7 - Article Upvotes vs. Downvotes
+
+Vertical Stacked Bar Graph:
+don:data:dvrv-us-1:devo/0:widget/KFb7KlMFHb
+
+Horizontal Stacked Bar Graph:
+don:data:dvrv-us-1:devo/0:widget/QdcXXJ67Ee
+
 ## Fix 6 - Article Analysis Total Views
 
 Unique Views Over Time - Line Graph
