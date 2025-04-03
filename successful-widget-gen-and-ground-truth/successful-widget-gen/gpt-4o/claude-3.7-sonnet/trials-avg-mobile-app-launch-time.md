@@ -16,9 +16,39 @@ Given the table schema: mobile_sessions_metadatas_v1Schema session_id VARCHAR cr
 
 # Output
 
-## Fix 7.2 - Base Queyr
+## Fix 7.2 - Base Queyr Gen
 
+QUERY GEN:
 SELECT platform, app_launch_time FROM mobile_sessions_metadatas_v1Schema WHERE app_launch_time IS NOT NULL AND app_launch_time > 0 AND platform IS NOT NULL AND platform != ''
+
+ERRORS:
+Error: Catalog Error: Table with name mobile_sessions_metadatas_v1Schema does not exist! Did you mean "sqlite_schema"? LINE 1: ...(SELECT platform, app_launch_time FROM mobile_sessions_metadatas_v1Schema WHER... ^
+
+RESULT:
+No widget
+
+## Fix 7.1 - Base Query Modification
+
+WGT GEN:
+don:data:dvrv-us-1:devo/0:widget/F7W304svWV
+
+ERRORS:
+Failed to create widget - invalid field: precision
+
+RESULT: Success
+
+## Fix 7
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/ay780jMP5s
+
+ERRORS:
+Unexpected non-whitespace character after JSON at position 2564 (line 99 column 2)
+
+Failed to create widget - Invalid field: precision
+
+RESULT: Roadblock
+Too many base query instructinos; fixed in wbg-fix-7.1.md
 
 ## Fix 6 - Instructions + Code
 

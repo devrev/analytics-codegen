@@ -36,11 +36,62 @@ Given the table schema: article_views_and_votes_summary Schema article_id VARCHA
 
 ### Unique Views
 
+QUERY GEN:
 SELECT article_views_and_votes_summary.article_id, article_views_and_votes_summary.record_date, article_views_and_votes_summary.unique_views FROM article_views_and_votes_summary WHERE article_views_and_votes_summary.article_id IS NOT NULL AND article_views_and_votes_summary.record_date IS NOT NULL AND article_views_and_votes_summary.unique_views IS NOT NULL AND article_views_and_votes_summary.unique_views > 0 ORDER BY article_views_and_votes_summary.record_date
+
+ERRORS:
+Request failed with status code 404
+
+RESULT:
+Roadblock - Unable to fix 404 error 4 times; changed config to table unnecessarily.
 
 ### Upvotes vs. Downvotes
 
+QUERY GEN:
 SELECT dim_article.title, article_views_and_votes_summary.article_upvotes, article_views_and_votes_summary.article_downvotes FROM dim_article JOINarticle_views_and_votes_summary ON article_views_and_votes_summary.article_id = dim_article.id WHERE article_views_and_votes_summary.article_upvotes IS NOT NULL AND article_views_and_votes_summary.article_downvotes IS NOT NULL AND article_views_and_votes_summary.article_upvotes >= 0 AND article_views_and_votes_summary.article_downvotes >= 0 AND dim_article.is_deleted = FALSE
+
+ERRORS:
+Request failed with status code 404
+
+RESULT:
+Roadblock - Unable to fix 404 error 3 times; does not display.
+
+## Fix 7 - More instructions
+
+### Total Views
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/kfa5QzOzvT
+
+ERRORS:
+Failed to create wiedget - invalid type: is_compact
+
+RESULT:
+Success - Added base query prompt, see wbg-fix-7.md
+
+### Unique Views
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/UgrmUVwxoC
+
+ERRORS:
+Failed to create wiedget - invalid type: is_compact
+
+RESULT:
+Success - Added base query prompt, see wbg-fix-7.md
+
+### Upvotes vs. Downvotes
+
+WGT ID:
+<NONE>
+
+ERRORS:
+Error: Binder Error: Referenced column "article_upvotes" not found in FROM clause! Candidate bindings: "article_votes.total_upvotes" LINE 1: SELECT SUM(COALESCE(article_upvotes, 0)) AS article_votes\_\_... ^
+
+Error: Binder Error: Referenced table "s" not found! Candidate tables: "article_votes" LINE 1: SELECT SUM(COALESCE(s.article_upvotes, 0)) AS article_votes... ^
+
+RESULT:
+Roadblock -Too many base query errors
 
 ## Fix 6 - Code + Instructions
 

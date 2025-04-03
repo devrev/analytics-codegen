@@ -1,5 +1,29 @@
 # Widgets Generated
 
+## Fix 7.1 - Performance Incident Count
+
+don:data:dvrv-us-1:devo/0:widget/D8XhRlv3mz
+
+## 7.1 - Avg. App Launch Time
+
+don:data:dvrv-us-1:devo/0:widget/F7W304svWV
+
+## Fix 7 - Performance Incident Count
+
+don:data:dvrv-us-1:devo/0:widget/H2z9sRxDEo
+
+## Fix 7 - Avg. App Launch Time
+
+don:data:dvrv-us-1:devo/0:widget/ay780jMP5s
+
+## Fix 7 - Total Views
+
+don:data:dvrv-us-1:devo/0:widget/kfa5QzOzvT
+
+# Fix 7 - Unique Views
+
+don:data:dvrv-us-1:devo/0:widget/UgrmUVwxoC
+
 ## Fix 7 - Article Upvotes vs. Downvotes
 
 Vertical Stacked Bar Graph:

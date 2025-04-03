@@ -8,6 +8,28 @@ Given the base SQL query: SELECT id, created_date, mitigated_date, identified_da
 
 # Trials
 
+## Fix 7.1 Base Query Manipulation
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/D8XhRlv3mz
+
+ERRORS:
+<NONE>
+
+RESULT: Success
+NO ERRORS!
+
+## Fix 7 More Instructions
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/H2z9sRxDEo
+
+ERRORS:
+Failed to create wiedget - invalid type: is_compact
+
+RESULT: Success
+Added base query prompt, see wbg-fix-7.md
+
 ## Fix 6 - Instructions + Code
 
 Successful: after one error - wrong config value!
