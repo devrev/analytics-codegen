@@ -1,13 +1,97 @@
-# Input
+# Widget Generation
 
-Given the base SQL query: SELECT \* FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true And the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR
-Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of what to visualize + visualization type.
+## Input: Total Article Views
+
+Given the base SQL query: SELECT \* FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true And the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of total article views in a line graph.
+
+## Input: Unique Article Views
+
+Given the base SQL query: SELECT \* FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true And the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of unique article views in a line graph.
+
+## Input: Upvotes vs. Downvotes
+
+Given the base SQL query: SELECT \* FROM system.article_views_and_votes_summary s LEFT OUTER JOIN system.dim_article a ON s.article_id = a.id AND a.is_deleted != true And the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of upvotes vs. downvotes in a stacked-bar graph.
 
 ## Follow-Up
 
 <paste widget preview error here>
 
+# Base Query Generation
+
+## Input: Total Article Views
+
+Given the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR and the prompt for base query generation below, fully understand the pormpt and table schema. Generate an appropirate SQL query for a widget of total article views in a line graph.
+
+## Input: Unique Article Views
+
+Given the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR and the prompt for base query generation below, fully understand the pormpt and table schema. Generate an appropirate SQL query for a widget of unique article views in a line graph.
+
+## Input: Upvotes vs. Downvotes
+
+Given the table schema: article_views_and_votes_summary Schema article_id VARCHAR record_date DATE account_id VARCHAR surface VARCHAR is_verified BOOLEAN total_views BIGINT total_duration_ms BIGINT unique_views BIGINT article_upvotes BIGINT article_downvotes BIGINT dim_article Schema stock_schema_fragment_id VARCHAR object_version BIGINT last_system_modification_version BIGINT modified_date TIMESTAMP authored_by_ids VARCHAR[] sync_metadata VARCHAR created_date TIMESTAMP owned_by_ids VARCHAR[] shared_with VARCHAR extracted_content VARCHAR[] external_source_data VARCHAR created_by_id VARCHAR modified_by_id VARCHAR subtype VARCHAR resource_json VARCHAR object_type VARCHAR operation VARCHAR tags_json VARCHAR custom_schema_fragment_ids VARCHAR[] status VARCHAR num_downvotes BIGINT title VARCHAR rank VARCHAR custom_fields VARCHAR display_id VARCHAR scope VARCHAR access_level BIGINT num_upvotes BIGINT applies_to_part_ids VARCHAR[] aliases VARCHAR[] id VARCHAR is_deleted BOOLEAN parent VARCHAR description VARCHAR type BIGINT published_date TIMESTAMP language VARCHAR and the prompt for base query generation below, fully understand the pormpt and table schema. Generate an appropirate SQL query for a widget of upvotes vs. downvotes in a stacked-bar graph.
+
 # Output
+
+## Fix 7.2 - Base query
+
+### Unique Views
+
+QUERY GEN:
+SELECT article_views_and_votes_summary.article_id, article_views_and_votes_summary.record_date, article_views_and_votes_summary.unique_views FROM article_views_and_votes_summary WHERE article_views_and_votes_summary.article_id IS NOT NULL AND article_views_and_votes_summary.record_date IS NOT NULL AND article_views_and_votes_summary.unique_views IS NOT NULL AND article_views_and_votes_summary.unique_views > 0 ORDER BY article_views_and_votes_summary.record_date
+
+ERRORS:
+Request failed with status code 404
+
+RESULT:
+Roadblock - Unable to fix 404 error 4 times; changed config to table unnecessarily.
+
+### Upvotes vs. Downvotes
+
+QUERY GEN:
+SELECT dim_article.title, article_views_and_votes_summary.article_upvotes, article_views_and_votes_summary.article_downvotes FROM dim_article JOINarticle_views_and_votes_summary ON article_views_and_votes_summary.article_id = dim_article.id WHERE article_views_and_votes_summary.article_upvotes IS NOT NULL AND article_views_and_votes_summary.article_downvotes IS NOT NULL AND article_views_and_votes_summary.article_upvotes >= 0 AND article_views_and_votes_summary.article_downvotes >= 0 AND dim_article.is_deleted = FALSE
+
+ERRORS:
+Request failed with status code 404
+
+RESULT:
+Roadblock - Unable to fix 404 error 3 times; does not display.
+
+## Fix 7 - More instructions
+
+### Total Views
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/kfa5QzOzvT
+
+ERRORS:
+Failed to create wiedget - invalid type: is_compact
+
+RESULT:
+Success - Added base query prompt, see wbg-fix-7.md
+
+### Unique Views
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/UgrmUVwxoC
+
+ERRORS:
+Failed to create wiedget - invalid type: is_compact
+
+RESULT:
+Success - Added base query prompt, see wbg-fix-7.md
+
+### Upvotes vs. Downvotes
+
+WGT ID:
+<NONE>
+
+ERRORS:
+Error: Binder Error: Referenced column "article_upvotes" not found in FROM clause! Candidate bindings: "article_votes.total_upvotes" LINE 1: SELECT SUM(COALESCE(article_upvotes, 0)) AS article_votes\_\_... ^
+
+Error: Binder Error: Referenced table "s" not found! Candidate tables: "article_votes" LINE 1: SELECT SUM(COALESCE(s.article_upvotes, 0)) AS article_votes... ^
+
+RESULT:
+Roadblock -Too many base query errors
 
 ## Fix 6 - Code + Instructions
 

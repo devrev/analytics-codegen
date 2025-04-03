@@ -1,55 +1,54 @@
-# Input
+# Widget Generation
 
-Given the base SQL query:
-SELECT network_operator, AVG(app_launch_time) AS avg_launch_time
-FROM system.mobile_sessions_metadatas_v1
-GROUP BY network_operator ORDER BY avg_launch_time
+## Input
 
-And the table schema: mobile_sessions_metadatas_v1
-Schema
-session_id
-session_id
-VARCHAR
-created_at
-TIMESTAMP
-version_key
-VARCHAR
-identifier
-VARCHAR
-network_operator
-VARCHAR
-network_type
-VARCHAR
-first_user_interaction
-BIGINT
-app_launch_time
-BIGINT
-app_launch_type
-VARCHAR
-device_manufacturer
-VARCHAR
-device_name
-VARCHAR
-app_version
-VARCHAR
-exception_type
-VARCHAR
-error_count
-BIGINT
-is_rage
-BIGINT
-ux_evaluation
-VARCHAR
-platform
-VARCHAR
+Given the base SQL query: SELECT network_operator, AVG(app_launch_time) AS avg_launch_time FROM system.mobile_sessions_metadatas_v1 GROUP BY network_operator ORDER BY avg_launch_time And the table schema: mobile_sessions_metadatas_v1Schema session_id VARCHAR created_at TIMESTAMP version_key VARCHAR identifier VARCHAR network_operator VARCHAR network_type VARCHAR first_user_interaction BIGINT app_launch_time BIGINT app_launch_type VARCHAR device_manufacturer VARCHAR device_name VARCHAR app_version VARCHAR exception_type VARCHAR error_count BIGINT is_rage BIGINT ux_evaluation VARCHAR platform VARCHAR Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of average app launch time in a bar graph.
 
-Understand the widget building guide below fully for how to create a widget. Keep in mind the base query and table schema. Generate the JSON configuration for a widget of average app launch time in a bar graph.
-
-# Follow-Up
+## Follow-Up
 
  <paste error here>
 
-# Trials
+# Query Generation
+
+## Input
+
+Given the table schema: mobile_sessions_metadatas_v1Schema session_id VARCHAR created_at TIMESTAMP version_key VARCHAR identifier VARCHAR network_operator VARCHAR network_type VARCHAR first_user_interaction BIGINT app_launch_time BIGINT app_launch_type VARCHAR device_manufacturer VARCHAR device_name VARCHAR app_version VARCHAR exception_type VARCHAR error_count BIGINT is_rage BIGINT ux_evaluation VARCHAR platform VARCHAR and the prompt for base query generation below, fully understand the pormpt and table schema. Generate an appropirate SQL query for a widget of average app launch time in a bar graph.
+
+# Output
+
+## Fix 7.2 - Base Queyr Gen
+
+QUERY GEN:
+SELECT platform, app_launch_time FROM mobile_sessions_metadatas_v1Schema WHERE app_launch_time IS NOT NULL AND app_launch_time > 0 AND platform IS NOT NULL AND platform != ''
+
+ERRORS:
+Error: Catalog Error: Table with name mobile_sessions_metadatas_v1Schema does not exist! Did you mean "sqlite_schema"? LINE 1: ...(SELECT platform, app_launch_time FROM mobile_sessions_metadatas_v1Schema WHER... ^
+
+RESULT:
+No widget
+
+## Fix 7.1 - Base Query Modification
+
+WGT GEN:
+don:data:dvrv-us-1:devo/0:widget/F7W304svWV
+
+ERRORS:
+Failed to create widget - invalid field: precision
+
+RESULT: Success
+
+## Fix 7
+
+WGT ID:
+don:data:dvrv-us-1:devo/0:widget/ay780jMP5s
+
+ERRORS:
+Unexpected non-whitespace character after JSON at position 2564 (line 99 column 2)
+
+Failed to create widget - Invalid field: precision
+
+RESULT: Roadblock
+Too many base query instructinos; fixed in wbg-fix-7.1.md
 
 ## Fix 6 - Instructions + Code
 
