@@ -1,10 +1,13 @@
-## Base Query
+# Base Query
 
 Change base query before inserting in sample widget template below.
 Remove all table aliases and use entire table names in query.
 Replace aggregate functions with only the column names in query.
 Filter only necessary columns for widget generation in query.
 Add NULL-value handling to take care of any non-existent data in query.
+Ensure WHERE clause handles negative and empty values.
+
+## Extra, if needed:
 
 Also, try the following, if applicable:
 
