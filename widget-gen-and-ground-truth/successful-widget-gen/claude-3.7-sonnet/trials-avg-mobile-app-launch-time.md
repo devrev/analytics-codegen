@@ -10,11 +10,19 @@ Given the base SQL query: SELECT network_operator, AVG(app_launch_time) AS avg_l
 
 # Query Generation
 
-## Input
+## Input w/ BQP
 
 Given the table schema: mobile_sessions_metadatas_v1Schema session_id VARCHAR created_at TIMESTAMP version_key VARCHAR identifier VARCHAR network_operator VARCHAR network_type VARCHAR first_user_interaction BIGINT app_launch_time BIGINT app_launch_type VARCHAR device_manufacturer VARCHAR device_name VARCHAR app_version VARCHAR exception_type VARCHAR error_count BIGINT is_rage BIGINT ux_evaluation VARCHAR platform VARCHAR and the prompt for base query generation below, fully understand the pormpt and table schema. Generate an appropirate SQL query for a widget of average app launch time in a bar graph.
 
+## Input w/o BQP
+
+Given the table schema: Table name: system.mobile_sessions_metadatas_v1 Table schema: session_id VARCHAR created_at TIMESTAMP version_key VARCHAR identifier VARCHAR network_operator VARCHAR network_type VARCHAR first_user_interaction BIGINT app_launch_time BIGINT app_launch_type VARCHAR device_manufacturer VARCHAR device_name VARCHAR app_version VARCHAR exception_type VARCHAR error_count BIGINT is_rage BIGINT ux_evaluation VARCHAR platform VARCHAR Generate an appropriate SQL query for a widget of average app launch time in a bar graph.
+
 # Output
+
+# 4.3.25 - no BQP, query gen
+
+SELECT platform, AVG(app_launch_time) AS average_launch_time_ms FROM system.mobile_sessions_metadatas_v1 WHERE app_launch_time IS NOT NULL AND app_launch_time > 0 -- Filter out potentially invalid values AND created_at >= CURRENT_DATE - INTERVAL '30 days' -- Last 30 days for relevancy GROUP BY platform ORDER BY average_launch_time_ms DESC
 
 ## Fix 7.2 - Base Queyr Gen
 
