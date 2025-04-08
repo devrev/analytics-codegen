@@ -5,7 +5,7 @@ Given the base SQL query: SELECT id, created_date, mitigated_date, identified_da
 # Follow-Up
 
  <paste error here>
-
+    
 # Trials
 
 ## Fix 7.1 Base Query Manipulation
